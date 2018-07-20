@@ -1,0 +1,26 @@
+{
+  "name": "vchat",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon app"
+  },
+  "keywords": [
+    "socket.io",
+    "koa",
+    "mongodb",
+    "React"
+  ],
+  "author": "Venus",
+  "repository": "https://github.com/bbbbx/vchat",
+  "license": "BSD 3-Clause License",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.2.4",
+    "socket.io": "^2.1.1"
+  }
+}
