@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const cors = require('@koa/cors');
 const http = require('http');
 const app = new Koa();
 const server = http.Server(app.callback());
@@ -7,6 +8,7 @@ const io = require('socket.io')(server);
 const router = require('./routers/api');
 
 app
+  .use(cors())
   .use(router.routes())
   .use(router.allowedMethods());
 
