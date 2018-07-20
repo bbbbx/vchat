@@ -12,7 +12,6 @@ app
 
 io.on('connection', socket => {
   socket.on('message', data => {
-    console.log('user send a message');
     io.sockets.send(data);
   });
 

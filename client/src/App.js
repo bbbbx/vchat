@@ -1,35 +1,22 @@
-import React, { Component } from 'react';
-import io from 'socket.io-client';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import './App.css';
+import store from './store';
+import Login from './pages/login';
+import Home from './pages/home';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      msg: '',
-      socket: io('http://localhost:8000')
-    };
-    this.handleSendMsg = this.handleSendMsg.bind(this);
-  }
-
-  componentDidMount() {
-    this.state.socket.on('message', data => {
-      this.setState((provState) => ({
-        msg: provState.msg + data
-      }));
-    });
-  }
-
-  handleSendMsg() {
-    this.state.socket.send('hello world!');
-  }
-
   render() {
     return (
-      <div>
-        { this.state.msg }
-        <button onClick={this.handleSendMsg}>Send</button>
-      </div>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Fragment>
+            <Route path='/' exact component={Home} />
+            <Route path='/login' exact component={Login} />
+          </Fragment>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
