@@ -1,0 +1,8 @@
+export const CHANGE_ACCOUNT_INPUT = 'login/CHANGE_ACCOUNT_INPUT';
+export const CHANGE_USERNAME_INPUT = 'login/CHANGE_USERNAME_INPUT';
+export const CHANGE_PASSWORD_INPUT = 'login/CHANGE_PASSWORD_INPUT';
+export const CHANGELOGIN = 'login/CHANGELOGIN';
+export const TOGGLE_SHOW_REGISTER_VIEW = 'login/TOGGLE_SHOW_REGISTER_VIEW';
+export const CHANGE_MESSAGE = 'login/CHANGE_MESSAGE';
+export const LOADING = 'login/LOADING';
+export const REGISTERED = 'login/REGISTERED';

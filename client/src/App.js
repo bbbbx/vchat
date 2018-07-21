@@ -12,8 +12,8 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <Fragment>
-            <Route path='/' exact component={Home} />
-            <Route path='/login' exact component={Login} />
+            <Route exact path='/' component={Home} />
+            <Route exact path='/login' component={Login} />
           </Fragment>
         </BrowserRouter>
       </Provider>
