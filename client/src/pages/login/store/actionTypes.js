@@ -6,3 +6,5 @@ export const TOGGLE_SHOW_REGISTER_VIEW = 'login/TOGGLE_SHOW_REGISTER_VIEW';
 export const CHANGE_MESSAGE = 'login/CHANGE_MESSAGE';
 export const LOADING = 'login/LOADING';
 export const REGISTERED = 'login/REGISTERED';
+export const CONNECT_SOCKET = 'login/CONNECT_SOCKET';
+export const DISCONNECT_SOCKET = 'login/DISCONNECT_SOCKET';

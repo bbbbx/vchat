@@ -14,12 +14,17 @@ import { actionCreators } from './store';
 import Register from './components/Register';
 
 class Login extends Component {
+  componentDidMount() {
+    console.log(`Login componentDidMount`);
+  }
+
   render() {
     const { 
       loading,
       account,
       password,
       isLogin,
+      connectedSocket,
       showRegisterView,
       handleChangeAccount, 
       handleChangePassword, 
@@ -27,10 +32,11 @@ class Login extends Component {
       handleShowRegisterView
     } = this.props;
     const loadingComponent = loading && <Loading>登录中...</Loading>;
+    console.log(`Login render`,isLogin, connectedSocket);
     return (
       showRegisterView
         ? <Register />
-        : isLogin
+        : isLogin && connectedSocket
             ? <Redirect to='/' />
             : <Fragment>
                 {loadingComponent}
@@ -57,6 +63,7 @@ const mapStateToProps = state => ({
   account: state.login.account,
   password: state.login.password,
   socket: state.login.socket,
+  connectedSocket: state.login.connectedSocket,
   showRegisterView: state.login.showRegisterView
 });
 

@@ -13,12 +13,10 @@ app
   .use(router.allowedMethods());
 
 io.on('connection', socket => {
-  socket.on('message', data => {
-    io.sockets.send(data);
-  });
+  console.log('新用户连接');
 
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('有用户断开连接');
   });
 });
 

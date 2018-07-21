@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {
+  Button,
+  Input
+} from './styled';
+import { actionCreators as loginActionCreators } from '../login/store';
 
 class Home extends Component {
   componentDidMount() {
-    this.props.socket.send('from client');
-    this.props.socket.on('message', data => {
-      console.log(data);
-    });
+    console.log(`Home componentDidMount`);
+    const { isLogin, socket, connectSocket } = this.props;
+    isLogin && !socket && connectSocket();
+  }
+
+  componentWillUnmount() {
+    const { disconnectSocket } = this.props;
+    console.log(`Home componentWillUnmount`);
+    disconnectSocket();
+    localStorage.clear();
   }
 
   render() {
-    const { username, friends, isLogin } = this.props;
-    if (isLogin) {
+    console.log(`Home render`);
+    const { username, friends, isLogin, connectedSocket, handleSendMessage } = this.props;
+    if (isLogin && connectedSocket) {
       return (
         <div>
           <h1>Home</h1>
@@ -25,6 +37,8 @@ class Home extends Component {
               ))
             }
           </ul>
+          <Input />
+          <Button onClick={handleSendMessage}>发送</Button>
         </div>
       );
     } else {
@@ -38,7 +52,20 @@ const mapStateToProps = state => ({
   account: state.login.account,
   username: state.login.username,
   friends: state.login.friends,
-  socket: state.login.socket
+  socket: state.login.socket,
+  connectedSocket: state.login.connectedSocket
 });
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = dispatch => ({
+  handleSendMessage() {
+    alert('handleSendMessage');
+  },
+  connectSocket() {
+    dispatch(loginActionCreators.connectSocket());
+  },
+  disconnectSocket() {
+    dispatch(loginActionCreators.disconnectSocket());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -2,16 +2,17 @@ import io from 'socket.io-client';
 import * as actionTypes from './actionTypes';
 
 const initState = {
-  loading: false,
-  message: '',
+  isLogin: false,
   id: '',
   account: '',
   username: '',
   password: '',
   friends: [],
   token: '',
-  isLogin: false,
-  socket: io('http://localhost:8000'),
+  socket: null,
+  connectedSocket: false,
+  message: '',
+  loading: false,
   showRegisterView: false
 };
 
@@ -58,7 +59,7 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         loading: payload
-      }
+      };
     case actionTypes.REGISTERED:
       return {
         ...state,
@@ -70,6 +71,18 @@ const reducer = (state = initState, action) => {
         token: payload.token,
         isLogin: payload.isLogin,
         showRegisterView: payload.showRegisterView
+      };
+    case actionTypes.CONNECT_SOCKET:
+      return {
+        ...state,
+        socket: io('http://localhost:8000'),
+        connectedSocket: true
+      };
+    case actionTypes.DISCONNECT_SOCKET:
+      return {
+        ...state,
+        socket: null,
+        connectedSocket: false
       }
     default:
       return state;

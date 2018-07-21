@@ -16,6 +16,14 @@ const loading = payload => ({
   payload
 });
 
+export const connectSocket = () => ({
+  type: actionTypes.CONNECT_SOCKET
+});
+
+export const disconnectSocket = () => ({
+  type: actionTypes.DISCONNECT_SOCKET
+});
+
 export const changeMessage = (payload) => ({
   type: actionTypes.CHANGE_MESSAGE,
   payload
@@ -59,6 +67,7 @@ export const login = payload => dispatch => {
             token,
             isLogin: true
           }));
+          dispatch(connectSocket());
         }
       });
 };
@@ -93,6 +102,7 @@ export const register = payload => dispatch => {
           isLogin: true,
           showRegisterView: false
         }));
+        dispatch(connectSocket());
       }
     })
     .catch(err => {
