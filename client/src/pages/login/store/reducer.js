@@ -1,4 +1,3 @@
-import io from 'socket.io-client';
 import * as actionTypes from './actionTypes';
 
 const initState = {
@@ -10,7 +9,6 @@ const initState = {
   friends: [],
   token: '',
   socket: null,
-  connectedSocket: false,
   message: '',
   loading: false,
   showRegisterView: false
@@ -48,7 +46,8 @@ const reducer = (state = initState, action) => {
         password: payload.password,
         friends: payload.friends,
         token: payload.token,
-        isLogin: payload.isLogin
+        isLogin: payload.isLogin,
+        socket: payload.socket
       };
     case actionTypes.TOGGLE_SHOW_REGISTER_VIEW:
       return {
@@ -70,22 +69,23 @@ const reducer = (state = initState, action) => {
         friends: payload.friends,
         token: payload.token,
         isLogin: payload.isLogin,
-        showRegisterView: payload.showRegisterView
+        showRegisterView: payload.showRegisterView,
+        socket: payload.socket
       };
     case actionTypes.CONNECT_SOCKET:
       return {
         ...state,
-        socket: io('http://localhost:8000'),
-        connectedSocket: true
+        socket: payload.socket
       };
     case actionTypes.DISCONNECT_SOCKET:
       return {
         ...state,
-        socket: null,
-        connectedSocket: false
+        socket: null
       }
     default:
-      return state;
+      return {
+        ...state
+      };
   }
 }
 

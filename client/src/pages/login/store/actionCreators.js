@@ -16,8 +16,9 @@ const loading = payload => ({
   payload
 });
 
-export const connectSocket = () => ({
-  type: actionTypes.CONNECT_SOCKET
+export const connectSocket = payload => ({
+  type: actionTypes.CONNECT_SOCKET,
+  payload
 });
 
 export const disconnectSocket = () => ({
@@ -47,29 +48,32 @@ export const changePasswordInput = (payload) => ({
 export const login = payload => dispatch => {
   dispatch(loading(true));
   axios
-      .post('http://localhost:8000/api/users/login', {
-        account: payload.account,
-        password: payload.password
-      })
-      .then(({ data }) => {
-        dispatch(loading(false));
-        if (data.code !== 0) {
-          alert(data.message);
-          return;
-        } else {
-          const { user, token } = data.data;
-          dispatch(changeLogin({
-            id: user._id,
-            account: user.account,
-            username: user.username,
-            password: user.password,
-            friends: user.friends,
-            token,
-            isLogin: true
-          }));
-          dispatch(connectSocket());
-        }
-      });
+    .post('http://localhost:8000/api/users/login', {
+      account: payload.account,
+      password: payload.password
+    })
+    .then(({ data }) => {
+      dispatch(loading(false));
+      if (data.code !== 0) {
+        alert(data.message);
+        return;
+      } else {
+        const { user, token } = data.data;
+        dispatch(changeLogin({
+          id: user._id,
+          account: user.account,
+          username: user.username,
+          password: user.password,
+          friends: user.friends,
+          token,
+          isLogin: true,
+          socket: payload.socket
+        }));
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
 export const toggleShowRegisterView = show => ({
@@ -100,9 +104,9 @@ export const register = payload => dispatch => {
           friends: user.friends,
           token,
           isLogin: true,
-          showRegisterView: false
+          showRegisterView: false,
+          socket: payload.socket
         }));
-        dispatch(connectSocket());
       }
     })
     .catch(err => {

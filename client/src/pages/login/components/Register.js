@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import {
   LoginWrapper,
   LoginBox,
@@ -90,7 +91,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(actionCreators.register({
         account,
         username,
-        password
+        password,
+        socket: io('http://localhost:8000')
       }));
     }
   },

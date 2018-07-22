@@ -8,23 +8,10 @@ import {
 import { actionCreators as loginActionCreators } from '../login/store';
 
 class Home extends Component {
-  componentDidMount() {
-    console.log(`Home componentDidMount`);
-    const { isLogin, socket, connectSocket } = this.props;
-    isLogin && !socket && connectSocket();
-  }
-
-  componentWillUnmount() {
-    const { disconnectSocket } = this.props;
-    console.log(`Home componentWillUnmount`);
-    disconnectSocket();
-    localStorage.clear();
-  }
 
   render() {
-    console.log(`Home render`);
-    const { username, friends, isLogin, connectedSocket, handleSendMessage } = this.props;
-    if (isLogin && connectedSocket) {
+    const { username, friends, isLogin, socket, handleSendMessage } = this.props;
+    if (isLogin && socket) {
       return (
         <div>
           <h1>Home</h1>
@@ -52,8 +39,7 @@ const mapStateToProps = state => ({
   account: state.login.account,
   username: state.login.username,
   friends: state.login.friends,
-  socket: state.login.socket,
-  connectedSocket: state.login.connectedSocket
+  socket: state.login.socket
 });
 
 const mapDispatchToProps = dispatch => ({

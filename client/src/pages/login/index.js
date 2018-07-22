@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import io from 'socket.io-client';
 import {
   LoginWrapper,
   LoginBox,
@@ -24,7 +25,7 @@ class Login extends Component {
       account,
       password,
       isLogin,
-      connectedSocket,
+      socket,
       showRegisterView,
       handleChangeAccount, 
       handleChangePassword, 
@@ -32,11 +33,11 @@ class Login extends Component {
       handleShowRegisterView
     } = this.props;
     const loadingComponent = loading && <Loading>登录中...</Loading>;
-    console.log(`Login render`,isLogin, connectedSocket);
+    console.log(`Login render`);
     return (
       showRegisterView
         ? <Register />
-        : isLogin && connectedSocket
+        : isLogin && socket
             ? <Redirect to='/' />
             : <Fragment>
                 {loadingComponent}
@@ -63,7 +64,6 @@ const mapStateToProps = state => ({
   account: state.login.account,
   password: state.login.password,
   socket: state.login.socket,
-  connectedSocket: state.login.connectedSocket,
   showRegisterView: state.login.showRegisterView
 });
 
@@ -75,7 +75,8 @@ const mapDispatchToProps = dispatch => ({
     } else {
       dispatch(actionCreators.login({
         account,
-        password
+        password,
+        socket: io('http://localhost:8000')
       }));
     }
   },

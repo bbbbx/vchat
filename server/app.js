@@ -6,6 +6,7 @@ const server = http.Server(app.callback());
 const io = require('socket.io')(server);
 
 const router = require('./routers/api');
+let onlineUsers = [];
 
 app
   .use(cors())
