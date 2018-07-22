@@ -16,6 +16,12 @@ app
 io.on('connection', socket => {
   console.log('新用户连接');
 
+  socket.on('message', ({ from, message }) => {
+    console.log(from, message);
+    socket.broadcast.send({ from, message });  // 广播给其他用户
+    socket.send({ from, message });  // 发给自己
+  });
+
   socket.on('disconnect', () => {
     console.log('有用户断开连接');
   });

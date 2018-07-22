@@ -1,0 +1,1 @@
+export const RECEIVE_MESSAGE = 'home/RECEIVE_MESSAGE';
