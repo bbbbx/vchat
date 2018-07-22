@@ -16,6 +16,17 @@ app
 io.on('connection', socket => {
   console.log('新用户连接');
 
+  socket.on('add_user', username => {
+    socket.username = username;
+    if (onlineUsers.includes(username)) {
+      socket.emit('user_already_online', username);
+    } else {
+      onlineUsers.push(username);
+      io.sockets.emit('update_onlineUsers', onlineUsers);
+    }
+    console.log('onlineUsers', onlineUsers);
+  });
+
   socket.on('message', ({ from, message }) => {
     console.log(from, message);
     socket.broadcast.send({ from, message });  // 广播给其他用户
@@ -24,6 +35,13 @@ io.on('connection', socket => {
 
   socket.on('disconnect', () => {
     console.log('有用户断开连接');
+    if (onlineUsers.includes(socket.username)) {
+      onlineUsers.splice(onlineUsers.indexOf(socket.username), 1);
+      io.sockets.emit('update_onlineUsers', onlineUsers);
+    } else {
+
+    }
+    console.log('onlineUsers', onlineUsers);
   });
 });
 

@@ -1,18 +1,22 @@
 import * as actionTypes from './actionTypes';
 
 const initState = {
-  messageList: []
+  messageList: [],
+  onlineUsers: []
 };
 
 const reducer = (state = initState, action) => {
   const { type, payload } = action;
+  let newState = JSON.parse(JSON.stringify(state));
   switch(type) {
     case actionTypes.RECEIVE_MESSAGE:
-      let newState = JSON.parse(JSON.stringify(state));
       newState.messageList.push({
         username: payload.username,
         message: payload.message
       });
+      return newState;
+    case actionTypes.UPDATE_ONLINE_USERS:
+      newState.onlineUsers = JSON.parse(JSON.stringify(payload));
       return newState;
     default:
       return {

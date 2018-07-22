@@ -1,1 +1,2 @@
 export const RECEIVE_MESSAGE = 'home/RECEIVE_MESSAGE';
+export const UPDATE_ONLINE_USERS = 'home/UPDATE_ONLINE_USERS';

@@ -10,14 +10,15 @@ const loginPersistConfig = {
   blacklist: ['socket']
 };
 
-// const rootPersistConfig = {
-//   key: 'root',
-//   storage: storage,
-// };
+const homeersistConfig = {
+  key: 'home',
+  storage: storage,
+  blacklist: ['onlineUsers']
+};
 
 const rootReducer = combineReducers({
   login: persistReducer(loginPersistConfig, loginReducer),
-  home: homeReducer
+  home: persistReducer(homeersistConfig, homeReducer)
 });
 
 // const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
