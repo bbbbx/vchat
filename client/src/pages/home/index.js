@@ -2,11 +2,18 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+  HomeWrapper,
+  HomeLeft,
+  HomeRight,
   Button,
   Input
 } from './styled';
 import { actionCreators as loginActionCreators } from '../login/store';
 import { actionCreators as homeActionCreators } from './store';
+import Userinfo from './components/Userinfo';
+import Chatlist from './components/Chatlist';
+import ContentBox from './components/ContentBox';
+import InputBox from './components/InputBox';
 
 class Home extends Component {
   componentDidMount() {
@@ -29,50 +36,18 @@ class Home extends Component {
     const { username, friends, onlineUsers, messageList, isLogin, socket, handleSendMessage } = this.props;
     if (isLogin && socket) {
       return (
-        <div>
-          <h1>VChat</h1>
-          <p>Welcome {username}</p>
-          {
-            friends.length === 0
-              ? <p>未加到任何好友</p>
-              : <div>
-                  <p>Your friends: </p>
-                  <ul>  
-                    {
-                      friends.map(item => (
-                        <li key={item}>
-                          <a href={'/users/' + item} >{item}</a>
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </div>
-          }
-          {
-            <div>
-              <p>在线用户：</p>
-              <ul>  
-                {
-                  onlineUsers.map(item => (
-                    <li key={item}>
-                      <a href={'/users/' + item} >{item}</a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-          }
-          <p>Message: </p>
-          <ul>
-            {
-              messageList.map(item => (
-                <li key={item.message}>{item.username}：{item.message}</li>
-              ))
-            }
-          </ul>
-          <Input innerRef={DOM => this.messageDOM = DOM} />
-          <Button onClick={() => handleSendMessage(username, this.messageDOM, socket)}>发送</Button>
-        </div>
+        <HomeWrapper>
+          <HomeLeft>
+            <Userinfo>
+            </Userinfo>
+            <Chatlist>
+            </Chatlist>
+          </HomeLeft>
+          <HomeRight>
+            <ContentBox />
+            <InputBox />
+          </HomeRight>
+        </HomeWrapper>
       );
     } else {
       return <Redirect to='/login' />;
