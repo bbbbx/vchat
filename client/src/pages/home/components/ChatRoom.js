@@ -7,7 +7,16 @@ import {
 class ChatRoom extends Component {
   render() {
     return (
-      <ChatRoomWrapper>ChatRoomWrapper</ChatRoomWrapper>
+      <ChatRoomWrapper>
+        <div className='avatar'>
+          <img alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
+        </div>
+        <div className='info'>
+          <h3 className='nickname'>
+            <span className='nickname-text'>{this.props.nickname}</span>
+          </h3>
+        </div>
+      </ChatRoomWrapper>
     );
   }
 }

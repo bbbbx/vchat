@@ -24,28 +24,69 @@ export const UserinfoWrapper = styled.div`
   border-top-left-radius: inherit;
   .avatar {
     flex: 1;
+    padding: 20px 10px;
+    img {
+      width: 40px;
+      border-radius: 3px;
+    }
   }
   .info {
-    flex: 3;
+    flex: 5;
     display: flex;
     .nickname {
       flex: 4;
     }
     .setting {
       flex: 1;
+      padding-top: 20px;
+      cursor: pointer;
     }
   }
 `;
 
 export const ChatlistWrapper = styled.div`
   flex: 4;
-  // background: #343434;
   overflow: auto;
 `;
 
 export const ChatRoomWrapper = styled.div`
+  overflow: hidden;
+  padding: 12px 18px 11px;
+  border-bottom: 1px solid #292c33;
+  position: relative;
+  cursor: pointer;
   height: 64px;
-  background: red;
+  color: white;
+  .avatar {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    img {
+      width: 40px;
+      border-radius: 3px;
+    }
+  }
+  .info {
+    overflow: hidden;
+    .nickname {
+      overflow: hidden;
+      margin: 0;
+      font-weight: 400;
+      font-size: 13px;
+      color: #fff;
+      line-height: 20px;
+      .nickname-text {
+        max-width: 200px;
+        display: inline-block;
+        vertical-align: top;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+      }
+    }
+  }
 `;
 
 export const HomeRight = styled.div`

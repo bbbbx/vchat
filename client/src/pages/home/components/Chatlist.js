@@ -9,27 +9,11 @@ class Chatlist extends Component {
   render() {
     return (
       <ChatlistWrapper>
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
-        <ChatRoom />
+        {
+          this.props.list.map(item => (
+            <ChatRoom nickname={item} key={item} />
+          ))
+        }
       </ChatlistWrapper>
     );
   }

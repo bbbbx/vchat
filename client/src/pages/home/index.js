@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import './react-tabs.css';
 import {
   HomeWrapper,
   HomeLeft,
@@ -14,6 +16,8 @@ import Userinfo from './components/Userinfo';
 import Chatlist from './components/Chatlist';
 import ContentBox from './components/ContentBox';
 import InputBox from './components/InputBox';
+import '../../statics/iconfont/iconfont';
+import '../../statics/iconfont/styled';
 
 class Home extends Component {
   componentDidMount() {
@@ -40,8 +44,27 @@ class Home extends Component {
           <HomeLeft>
             <Userinfo>
             </Userinfo>
-            <Chatlist>
-            </Chatlist>
+            <Tabs>
+              <TabList>
+                <Tab>
+                  <svg className='icon' aria-hidden='true'>
+                    <use xlinkHref='#icon-chat'></use>
+                  </svg>
+                </Tab>
+                <Tab>
+                  <svg className='icon' aria-hidden='true'>
+                    <use xlinkHref='#icon-friends'></use>
+                  </svg>
+                </Tab>
+              </TabList>
+
+              <TabPanel>
+                <Chatlist list={['chat room 1', 'chat room 2', 'chat room 3', 'chat room 4', 'chat room 5', 'chat room 6']} />
+              </TabPanel>
+              <TabPanel>
+              <Chatlist list={friends} />
+              </TabPanel>
+            </Tabs>
           </HomeLeft>
           <HomeRight>
             <ContentBox />

@@ -9,10 +9,18 @@ class Userinfo extends Component {
     const { username } = this.props;
     return (
       <UserinfoWrapper>
-        <div className='avatar'>avatar</div>
+        <div className='avatar'>
+          <a href='#'>
+            <img alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
+          </a>
+        </div>
         <div className='info'>
           <h3 className='nickname'>{username}</h3>
-          <a className='setting'>setting</a>
+          <a className='setting'>
+            <svg className='icon' aria-hidden='true'>
+              <use xlinkHref='#icon-setting'></use>
+            </svg>
+          </a>
         </div>
       </UserinfoWrapper>
     );
