@@ -3,20 +3,24 @@ import styled, { keyframes } from 'styled-components';
 const rotateY = keyframes`
   from {
     transform: rotatey(-180deg);
+    opacity: .3;
   }
 
   to {
     transform: perspective(1000px) rotatey(0deg);
+    opacity: 1;
   }
 `;
 
 const rotateYReverse = keyframes`
   from {
     transform: rotatey(-180deg);
+    opacity: .3;
   }
 
   to {
     transform: perspective(1000px) rotatey(0deg);
+    opacity: 1;
   }
 `;
 
@@ -42,7 +46,6 @@ export const LoginBox = styled.div`
   border-radius: 1em;
   box-shadow: 0 0 25px black;
   animation: ${rotateY} 1s linear;
-  position: absolute;
 `;
 
 export const RegisterBox = styled.div`
@@ -55,7 +58,6 @@ export const RegisterBox = styled.div`
   border-radius: 1em;
   box-shadow: 0 0 25px black;
   animation: ${rotateYReverse} 1s linear;
-  position: absolute;
 `;
 
 export const Input = styled.input`
