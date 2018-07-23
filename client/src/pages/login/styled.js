@@ -1,4 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const rotateY = keyframes`
+  from {
+    transform: rotatey(-180deg);
+  }
+
+  to {
+    transform: perspective(1000px) rotatey(0deg);
+  }
+`;
+
+const rotateYReverse = keyframes`
+  from {
+    transform: rotatey(-180deg);
+  }
+
+  to {
+    transform: perspective(1000px) rotatey(0deg);
+  }
+`;
 
 export const LoginWrapper = styled.section`
   margin: 0;
@@ -21,6 +41,21 @@ export const LoginBox = styled.div`
   flex-direction: column;
   border-radius: 1em;
   box-shadow: 0 0 25px black;
+  animation: ${rotateY} 1s linear;
+  position: absolute;
+`;
+
+export const RegisterBox = styled.div`
+  margin: 3em 0;
+  padding: 2em 2em;
+  flex: 1;
+  background: #333;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1em;
+  box-shadow: 0 0 25px black;
+  animation: ${rotateYReverse} 1s linear;
+  position: absolute;
 `;
 
 export const Input = styled.input`

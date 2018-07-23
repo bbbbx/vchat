@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import {
   LoginWrapper,
-  LoginBox,
+  RegisterBox,
   Input,
   Button,
   Title,
@@ -31,7 +31,7 @@ class Register extends Component {
       <Fragment>
         {loadingComponent}
         <LoginWrapper>
-          <LoginBox>
+          <RegisterBox>
             {
               message
                 ? <Title className='message'>{message}</Title>
@@ -47,7 +47,7 @@ class Register extends Component {
                 : <Button className="register" onClick={() => handleRegister(account, username, password)}>立即注册</Button>
             }
             <Button className="back-to-login" onClick={() => handleShowRegisterView(false)}>返回</Button>
-          </LoginBox>
+          </RegisterBox>
         </LoginWrapper>
       </Fragment>
     );
