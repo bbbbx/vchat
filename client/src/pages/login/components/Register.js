@@ -92,7 +92,11 @@ const mapDispatchToProps = dispatch => ({
         account,
         username,
         password,
-        socket: io('http://localhost:8000')
+        socket: io('http://localhost:8000', {
+          query: {
+            account
+          }
+        })
       }));
     }
   },

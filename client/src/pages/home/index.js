@@ -21,18 +21,12 @@ import '../../statics/iconfont/styled';
 
 class Home extends Component {
   componentDidMount() {
-    const { isLogin, socket, username, onlineUsers, receiveMessage, updateOnlineUsers } = this.props;
+    const { isLogin, socket, account, username, onlineUsers, receiveMessage, updateOnlineUsers } = this.props;
     if (isLogin && socket) {
-      socket.emit('add_user', username);
-      socket.on('message', ({ from, message}) => {
-        receiveMessage({ username: from, message });
-      });
-      socket.on('update_onlineUsers', onlineUsers => {
-        updateOnlineUsers(onlineUsers);
-      });
-      socket.on('user_already_online', username => {
-        alert(`${username} 已在线`); // [TODO] 用户已在线？
-      });
+      socket
+        .on('message', ({ from, message}) => {
+          receiveMessage({ username: from, message });
+        })
     }
   }
 

@@ -73,10 +73,25 @@ const mapDispatchToProps = dispatch => ({
     if (account.trim() === '' || password.trim() === '') {
       alert('用户或密码不能为空');
     } else {
+      const socket = io('http://localhost:8000', {
+        query: {
+          account
+        }
+      });
+      socket
+        .on('error', err => {
+          alert(err);
+          socket.close();
+          localStorage.clear();
+          dispatch(actionCreators.logout());
+        })
+        .on('connect', () => {
+          console.log('connect callback');
+        })
       dispatch(actionCreators.login({
         account,
         password,
-        socket: io('http://localhost:8000')
+        socket
       }));
     }
   },

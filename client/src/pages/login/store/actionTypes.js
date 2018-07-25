@@ -8,3 +8,4 @@ export const LOADING = 'login/LOADING';
 export const REGISTERED = 'login/REGISTERED';
 export const CONNECT_SOCKET = 'login/CONNECT_SOCKET';
 export const DISCONNECT_SOCKET = 'login/DISCONNECT_SOCKET';
+export const LOGOUT = 'login/LOGOUT';

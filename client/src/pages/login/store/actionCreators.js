@@ -76,6 +76,10 @@ export const login = payload => dispatch => {
     });
 };
 
+export const logout = () => ({
+  type: actionTypes.LOGOUT
+});
+
 export const toggleShowRegisterView = show => ({
   type: actionTypes.TOGGLE_SHOW_REGISTER_VIEW,
   payload: show

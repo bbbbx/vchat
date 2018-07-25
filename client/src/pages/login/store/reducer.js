@@ -81,7 +81,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         socket: null
-      }
+      };
+    case actionTypes.LOGOUT:
+      return {
+        ...initState
+      };
     default:
       return {
         ...state
