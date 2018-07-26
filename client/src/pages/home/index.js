@@ -61,6 +61,7 @@ class Home extends Component {
             </Tabs>
           </HomeLeft>
           <HomeRight>
+            <div className='title'>Friend name</div>
             <ContentBox />
             <InputBox />
           </HomeRight>

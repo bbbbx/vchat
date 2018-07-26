@@ -91,21 +91,51 @@ export const ChatRoomWrapper = styled.div`
 
 export const HomeRight = styled.div`
   flex: 5;
-  // background: red;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background-color: #eee;
+  height: 100%;
+  .title {
+    // width: 100%;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid #d6d6d6;
+    z-index: 1024;
+    padding: 10px 0;
+    margin: 0 19px;
+    line-height: 30px;
+    font-weight: 400;
+    height: 25px;
+    font-size: 14px;
+  }
 `;
 
-export const ContentWrapper = styled.div`
+export const ContentWrapper = styled.ul`
   flex: 5;
-`;
-
-export const MessageList = styled.ul`
+  position: absolute;
+  margin: 0;
+  padding: 0 19px;
+  top: 45px;
+  bottom: 180px;
+  right: 0;
+  left: 0;
   overflow: auto;
+  li {
+    list-style: none;
+  }
 `;
 
 export const InputWrapper = styled.div`
   flex: 2;
+  height: 180px;
+  margin-right: 19px;
+  border-top: 1px solid #d6d6d6;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
 `;
 
 export const Button = styled.button`
