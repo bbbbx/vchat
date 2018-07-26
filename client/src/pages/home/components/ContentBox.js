@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  ContentWrapper
+  ContentWrapper,
+  MessageList
 } from '../styled';
 
 class ContentBox extends Component {
@@ -9,13 +10,14 @@ class ContentBox extends Component {
     const { messageList } = this.props;
     return (
       <ContentWrapper>
-        <ul>
+        <h3>Friend name</h3>
+        <MessageList>
           {
             messageList.map(item => (
               <li key={item.message}>{item.username}：{item.message}</li>
             ))
           }
-        </ul>
+        </MessageList>
       </ContentWrapper>
     );
   }

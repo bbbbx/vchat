@@ -98,6 +98,9 @@ export const HomeRight = styled.div`
 
 export const ContentWrapper = styled.div`
   flex: 5;
+`;
+
+export const MessageList = styled.ul`
   overflow: auto;
 `;
 
