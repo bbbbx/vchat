@@ -11,7 +11,7 @@ class ContentBox extends Component {
       <ContentWrapper>
         {
           messageList.map(item => (
-            <li key={item.message}>{item.username}：{item.message}</li>
+            <li key={item.message} dangerouslySetInnerHTML={{ __html: item.username + '：' + item.message }} />
           ))
         }
       </ContentWrapper>

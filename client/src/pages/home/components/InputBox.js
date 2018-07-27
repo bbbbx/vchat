@@ -8,13 +8,37 @@ import {
 
 class InputBox extends Component {
   render() {
-    const { username, socket, handleSendMessage } = this.props;
+    const { username, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
     return (
       <InputWrapper>
-        {/* <input />
-        <button>发送</button> */}
-        <Input innerRef={DOM => this.messageDOM = DOM} />
-        <Button onClick={() => handleSendMessage(username, this.messageDOM, socket)}>发送</Button>
+        <div className='toolbar'>
+          <svg class="icon" aria-hidden="true">
+            <use xlinkHref="#icon-face"></use>
+          </svg>
+        </div>
+        <div 
+          contentEditable 
+          className='content' 
+          onKeyPress={e => {
+            // e.preventDefault();
+            if (e.ctrlKey) {
+              handleNextLine(this.contentDOM); 
+              return true;
+            }  
+            e.charCode === 13 && handleSendMessage(username, this.contentDOM, socket, scrollMessageList); 
+          }}
+          ref={DOM => {
+            this.contentDOM = DOM
+            setTimeout((DOM = this.contentDOM) => {
+              DOM.focus();
+            }, 0);
+            return this.contentDOM;
+          }}
+        ></div>
+        <div className='action'>
+          <span className='tips'>按下Ctrl+Enter换行</span>
+          <span className='btn' onClick={() => handleSendMessage(username, this.contentDOM, socket, scrollMessageList)}>发送</span>
+        </div>
       </InputWrapper>
     );
   }
@@ -26,12 +50,22 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSendMessage(username, messageDOM, socket) {
+  handleSendMessage(username, contentDOM, socket, scrollMessageList) {
     socket.send({
       from: username,
-      message: messageDOM.value
+      message: contentDOM.innerHTML
     });
-    messageDOM.value = '';
+    contentDOM.innerHTML = null;
+    scrollMessageList();
+  },
+  handleNextLine(contentDOM) {
+    contentDOM.innerHTML += '<br />';
+    contentDOM.focus();
+    var range = window.getSelection();   //创建range
+    range.selectAllChildren(contentDOM); //range 选择obj下所有子内容
+    range.collapseToEnd();               //光标移至最后
+
+    contentDOM.scrollTop = contentDOM.scrollHeight;
   }
 });
 

@@ -112,7 +112,7 @@ export const HomeRight = styled.div`
   }
 `;
 
-export const ContentWrapper = styled.ul`
+export const ContentWrapper = styled.div`
   flex: 5;
   position: absolute;
   margin: 0;
@@ -136,6 +136,49 @@ export const InputWrapper = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
+  .toolbar {
+    height: 30px;
+    padding: 5px 17px;
+    .icon {
+      font-size: 30px;
+    }
+  }
+  .content {
+    height: 100px;
+    margin: 0;
+    padding-left: 20px;
+    border: 0;
+    outline: none;
+    overflow: auto;
+    font-size: 14px;
+  }
+  .action {
+    height: 30px;
+    text-align: right;
+    margin-top: 5px;
+    .tips {
+      color: #888;
+      font-size: 12px;
+      margin-left: 10px;
+      margin-right: 7px;
+      text-align: right;
+    }
+    .btn {
+      text-decoration: none;
+      background-color: #fff;
+      color: #222;
+      padding-left: 30px;
+      padding-right: 30px;
+      display: inline-block;
+      border: 1px solid #c1c1c1;
+      border-radius: 4px;
+      padding: 3px 20px;
+      font-size: 14px;
+      outline: 0;
+      cursor: pointer;
+      text-align: right;
+    }
+  }
 `;
 
 export const Button = styled.button`

@@ -7,6 +7,7 @@ import {
   HomeWrapper,
   HomeLeft,
   HomeRight,
+  ContentWrapper,
   Button,
   Input
 } from './styled';
@@ -60,10 +61,21 @@ class Home extends Component {
               </TabPanel>
             </Tabs>
           </HomeLeft>
+
           <HomeRight>
             <div className='title'>Friend name</div>
-            <ContentBox />
-            <InputBox />
+            {/* <ContentBox /> */}
+            <ContentWrapper innerRef={DOM => { this.messageListDOM = DOM; }}>
+              {
+                messageList.map(item => (
+                  <li key={item.message} dangerouslySetInnerHTML={{ __html: item.username + '：' + item.message }} />
+                ))
+              }
+            </ContentWrapper>
+            <InputBox scrollMessageList={() => {
+              console.log(this.messageListDOM, this.messageListDOM.scrollTop, this.messageListDOM.scrollHeight);
+              this.messageListDOM.scrollTop = this.messageListDOM.scrollHeight - 424;
+            }} />
           </HomeRight>
         </HomeWrapper>
       );
