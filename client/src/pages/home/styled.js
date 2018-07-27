@@ -123,7 +123,87 @@ export const ContentWrapper = styled.div`
   left: 0;
   overflow: auto;
   li {
+    overflow: auto;
     list-style: none;
+    margin-bottom: 16px;
+    .date {
+      // display: inline-block;
+      text-align: center;
+      font-size: 12px;
+      margin: 10px auto;
+      padding: 1px 18px;
+      max-width: 50%;
+      color: #b2b2b2;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      float: left;
+      cursor: pointer;
+    }
+    .my-avatar {
+      float: right;
+    }
+    .username {
+      margin: 0;
+      font-weight: 400;
+      padding-left: 10px;
+      font-size: 12px;
+      height: 22px;
+      line-height: 24px;
+      color: #4f4f4f;
+      width: 350px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-wrap: normal;
+    }
+    .message {
+      display: inline-block;
+      position: relative;
+      padding: 9px 13px;
+      text-align: left;
+      font-size: 14px;
+      background: white;
+      border-radius: 3px;
+      margin-left: 15px;
+    }
+    .my-message {
+      display: inline-block;
+      position: relative;
+      padding: 9px 13px;
+      text-align: left;
+      font-size: 14px;
+      background: yellowgreen;
+      border-radius: 3px;
+      margin-right: 15px;
+      float: right;
+    }
+    .message::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border: 10px solid white;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      position: absolute;
+      top: 10px;
+      left: -20px;
+    }
+    .my-message::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border: 10px solid yellowgreen;
+      border-right-color: transparent;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      position: absolute;
+      top: 10px;
+      right: -20px;
+    }
   }
 `;
 
@@ -179,12 +259,4 @@ export const InputWrapper = styled.div`
       text-align: right;
     }
   }
-`;
-
-export const Button = styled.button`
-
-`;
-
-export const Input = styled.input`
-
 `;

@@ -10,7 +10,7 @@ class Userinfo extends Component {
     return (
       <UserinfoWrapper>
         <div className='avatar'>
-          <a href='#'>
+          <a href='/'>
             <img alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
           </a>
         </div>

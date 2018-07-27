@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 import {
-  InputWrapper,
-  Input,
-  Button
+  InputWrapper
 } from '../styled';
+dayjs.locale('zh-cn');
 
 class InputBox extends Component {
   render() {
     const { username, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
+    console.log(dayjs().format('HH:mm'));
     return (
       <InputWrapper>
         <div className='toolbar'>
-          <svg class="icon" aria-hidden="true">
+          <svg className="icon" aria-hidden="true">
             <use xlinkHref="#icon-face"></use>
           </svg>
         </div>
@@ -53,7 +55,8 @@ const mapDispatchToProps = dispatch => ({
   handleSendMessage(username, contentDOM, socket, scrollMessageList) {
     socket.send({
       from: username,
-      message: contentDOM.innerHTML
+      message: contentDOM.innerHTML,
+      date: dayjs().format('HH:mm')
     });
     contentDOM.innerHTML = null;
     scrollMessageList();

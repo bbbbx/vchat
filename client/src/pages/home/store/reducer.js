@@ -12,7 +12,8 @@ const reducer = (state = initState, action) => {
     case actionTypes.RECEIVE_MESSAGE:
       newState.messageList.push({
         username: payload.username,
-        message: payload.message
+        message: payload.message,
+        date: payload.date
       });
       return newState;
     case actionTypes.UPDATE_ONLINE_USERS:

@@ -31,10 +31,10 @@ io.on('connection', socket => {
     if (err) throw err;
     console.log(clients);
   });
-  socket.on('message', ({ from, message }) => {
-    console.log(from, message);
-    socket.broadcast.send({ from, message });  // 广播给其他用户
-    socket.send({ from, message });  // 发给自己
+  socket.on('message', ({ from, message, date }) => {
+    console.log(from, message, date);
+    socket.broadcast.send({ from, message, date });  // 广播给其他用户
+    socket.send({ from, message, date });  // 发给自己
   });
 
   socket.on('disconnect', reason => {
