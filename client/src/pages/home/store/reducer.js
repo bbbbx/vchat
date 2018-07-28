@@ -2,7 +2,8 @@ import * as actionTypes from './actionTypes';
 
 const initState = {
   messageList: [],
-  onlineUsers: []
+  onlineUsers: [],
+  roomTitle: ''
 };
 
 const reducer = (state = initState, action) => {
@@ -11,7 +12,8 @@ const reducer = (state = initState, action) => {
   switch(type) {
     case actionTypes.RECEIVE_MESSAGE:
       newState.messageList.push({
-        username: payload.username,
+        type: payload.type,
+        from: payload.from,
         message: payload.message,
         date: payload.date
       });
@@ -19,10 +21,11 @@ const reducer = (state = initState, action) => {
     case actionTypes.UPDATE_ONLINE_USERS:
       newState.onlineUsers = JSON.parse(JSON.stringify(payload));
       return newState;
+    case actionTypes.CHANGE_ROOM_TITLE:
+      newState.roomTitle = payload;
+      return newState;
     default:
-      return {
-        ...state
-      };
+      return newState;
   }
 };
 

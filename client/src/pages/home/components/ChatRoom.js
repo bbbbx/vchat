@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import md5 from 'md5';
 import {
   ChatRoomWrapper
 } from '../styled';
+import { actionCreators } from '../store';
 
 class ChatRoom extends Component {
   render() {
+    const { account, changeRoomTitle } = this.props;
+    const hashedAccount = md5(account);
     return (
-      <ChatRoomWrapper>
+      <ChatRoomWrapper onClick={() => changeRoomTitle(account)}>
         <div className='avatar'>
-          <img alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
+          <img alt={account} src={`https://www.gravatar.com/avatar/${hashedAccount}?f=y&d=identicon`} />
         </div>
         <div className='info'>
           <h3 className='nickname'>
@@ -22,8 +26,13 @@ class ChatRoom extends Component {
 }
 
 const mapStateToProps = state => ({
-  account: state.login.account,
-  username: state.login.username
+  friends: state.login.friends
 });
 
-export default connect(mapStateToProps, null)(ChatRoom);
+const mapDispatchToProps = dispatch => ({
+  changeRoomTitle(account) {
+    dispatch(actionCreators.changeRoomTitle(account));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatRoom);

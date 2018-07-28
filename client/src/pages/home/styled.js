@@ -123,7 +123,7 @@ export const ContentWrapper = styled.div`
   left: 0;
   overflow: auto;
   li {
-    overflow: auto;
+    overflow: hidden;
     list-style: none;
     margin-bottom: 16px;
     .date {

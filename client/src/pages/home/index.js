@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import md5 from 'md5';
 import './react-tabs.css';
 import {
   HomeWrapper,
@@ -22,14 +23,14 @@ class Home extends Component {
     const { isLogin, socket, receiveMessage } = this.props;
     if (isLogin && socket) {
       socket
-        .on('message', ({ from, message, date}) => {
-          receiveMessage({ username: from, message, date });
+        .on('message', data => {
+          receiveMessage(data);
         });
     }
   }
 
   render() {
-    const { friends, messageList, isLogin, socket } = this.props;
+    const { account, friends, messageList, isLogin, socket, roomTitle } = this.props;
     if (isLogin && socket) {
       return (
         <HomeWrapper>
@@ -51,30 +52,42 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <Chatlist list={['chat room 1', 'chat room 2', 'chat room 3', 'chat room 4', 'chat room 5', 'chat room 6']} />
+                <Chatlist list={['chat room 1', 'chat room 2', 'chat room 3', 'chat room 4', 'chat room 5', 'chat room 6', '7777']} />
               </TabPanel>
               <TabPanel>
-              <Chatlist list={friends} />
+                <Chatlist list={friends} />
               </TabPanel>
             </Tabs>
           </HomeLeft>
 
           <HomeRight>
-            <div className='title'>Friend name</div>
+            <div className='title'>{roomTitle}</div>
             {/* <ContentBox /> */}
             <ContentWrapper innerRef={DOM => { this.messageListDOM = DOM; }}>
               {
                 messageList.map(item => (
                   <li key={item.message + item.date}>
                     <div className='date'>{item.date}</div>
-                    <img className='avatar' alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
-                    <div>
-                      <h4 className='username' dangerouslySetInnerHTML={{ __html: item.username }} />
-                      <div className='message' dangerouslySetInnerHTML={{ __html: item.message }} />
-                    </div>
-                    {/* <img className='avatar my-avatar' alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
-                    <div className='my-message' dangerouslySetInnerHTML={{ __html: item.message }} /> */}
-                  </li>
+                    {
+                      item.type === 'public' && (
+                        <Fragment>
+                          <img className='avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />
+                          <div>
+                            <h4 className='username' dangerouslySetInnerHTML={{ __html: item.from }} />
+                            <div className='message' dangerouslySetInnerHTML={{ __html: item.message }} />
+                          </div>
+                        </Fragment>
+                      )
+                    }
+                    {
+                      item.type === 'my_message' && (
+                        <Fragment>
+                          <img className='avatar my-avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />
+                          <div className='my-message' dangerouslySetInnerHTML={{ __html: item.message }} />
+                        </Fragment>
+                      )
+                    }
+                  </li>      
                 ))
               }
             </ContentWrapper>
@@ -96,7 +109,8 @@ const mapStateToProps = state => ({
   username: state.login.username,
   friends: state.login.friends,
   socket: state.login.socket,
-  messageList: state.home.messageList
+  messageList: state.home.messageList,
+  roomTitle: state.home.roomTitle
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -106,8 +120,8 @@ const mapDispatchToProps = dispatch => ({
   disconnectSocket() {
     dispatch(loginActionCreators.disconnectSocket());
   },
-  receiveMessage({ username, message, date }) {
-    dispatch(homeActionCreators.receiveMessage({ username, message, date }));
+  receiveMessage(data) {
+    dispatch(homeActionCreators.receiveMessage(data));
   }
 });
 

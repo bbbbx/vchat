@@ -9,3 +9,8 @@ export const updateOnlineUsers = onlineUsers => ({
   type: actionTypes.UPDATE_ONLINE_USERS,
   payload: onlineUsers
 });
+
+export const changeRoomTitle = title => ({
+  type: actionTypes.CHANGE_ROOM_TITLE,
+  payload: title
+});
