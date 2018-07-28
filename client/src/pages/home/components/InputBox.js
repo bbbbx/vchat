@@ -9,7 +9,7 @@ dayjs.locale('zh-cn');
 
 class InputBox extends Component {
   render() {
-    const { username, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
+    const { username, roomTitle, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
     console.log(dayjs().format('HH:mm'));
     return (
       <InputWrapper>
@@ -27,7 +27,7 @@ class InputBox extends Component {
               handleNextLine(this.contentDOM); 
               return true;
             }  
-            e.charCode === 13 && handleSendMessage(username, this.contentDOM, socket, scrollMessageList); 
+            e.charCode === 13 && handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList); 
           }}
           ref={DOM => {
             this.contentDOM = DOM
@@ -48,13 +48,16 @@ class InputBox extends Component {
 
 const mapStateToProps = state => ({
   username: state.login.username,
+  roomTitle: state.home.roomTitle,
   socket: state.login.socket
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSendMessage(username, contentDOM, socket, scrollMessageList) {
+  handleSendMessage(username, roomTitle, contentDOM, socket, scrollMessageList) {
+    // [TODO] 显示自己私聊给他人的信息
     socket.send({
       from: username,
+      to: roomTitle,
       message: contentDOM.innerHTML,
       date: dayjs().format('HH:mm')
     });

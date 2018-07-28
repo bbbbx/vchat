@@ -26,7 +26,7 @@ Chatlist.propTypes = {
 };
 
 const mapStateToProps = state => ({
-
+  
 });
 
 export default connect(mapStateToProps, null)(Chatlist);

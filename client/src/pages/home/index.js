@@ -20,17 +20,23 @@ import '../../statics/iconfont/styled';
 
 class Home extends Component {
   componentDidMount() {
-    const { isLogin, socket, receiveMessage } = this.props;
+    const { username, isLogin, socket, receiveMessage, receivePrivateMessage } = this.props;
     if (isLogin && socket) {
       socket
         .on('message', data => {
-          receiveMessage(data);
+          if (data.to === username) {
+            // 私聊
+            receivePrivateMessage(data);
+          } else {
+            // 公聊
+            receiveMessage(data);
+          }
         });
     }
   }
 
   render() {
-    const { account, friends, messageList, isLogin, socket, roomTitle } = this.props;
+    const { friends, messageList, isLogin, socket, roomTitle } = this.props;
     if (isLogin && socket) {
       return (
         <HomeWrapper>
@@ -52,7 +58,7 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <Chatlist list={['chat room 1', 'chat room 2', 'chat room 3', 'chat room 4', 'chat room 5', 'chat room 6', '7777']} />
+                <Chatlist list={['public', 'private chat room 1', 'private chat room 2', 'private chat room 3', 'private chat room 4', 'private chat room 5', 'private chat room 6']} />
               </TabPanel>
               <TabPanel>
                 <Chatlist list={friends} />
@@ -65,8 +71,8 @@ class Home extends Component {
             {/* <ContentBox /> */}
             <ContentWrapper innerRef={DOM => { this.messageListDOM = DOM; }}>
               {
-                messageList.map(item => (
-                  <li key={item.message + item.date}>
+                messageList[roomTitle].map((item, index) => (
+                  <li key={item.message + item.date + index}>
                     <div className='date'>{item.date}</div>
                     {
                       item.type === 'public' && (
@@ -92,7 +98,7 @@ class Home extends Component {
               }
             </ContentWrapper>
             <InputBox scrollMessageList={() => {
-              this.messageListDOM.scrollTop = this.messageListDOM.scrollHeight;
+              this.messageListDOM.scrollTop = this.messageListDOM.scrollHeight - 104;
             }} />
           </HomeRight>
         </HomeWrapper>
@@ -122,6 +128,9 @@ const mapDispatchToProps = dispatch => ({
   },
   receiveMessage(data) {
     dispatch(homeActionCreators.receiveMessage(data));
+  },
+  receivePrivateMessage(data) {
+    dispatch(homeActionCreators.receivePrivateMessage(data));
   }
 });
 

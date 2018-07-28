@@ -1,9 +1,11 @@
 import * as actionTypes from './actionTypes';
 
 const initState = {
-  messageList: [],
+  messageList: {
+    'public': []
+  },
   onlineUsers: [],
-  roomTitle: ''
+  roomTitle: 'public'
 };
 
 const reducer = (state = initState, action) => {
@@ -11,7 +13,18 @@ const reducer = (state = initState, action) => {
   let newState = JSON.parse(JSON.stringify(state));
   switch(type) {
     case actionTypes.RECEIVE_MESSAGE:
-      newState.messageList.push({
+      newState.messageList[payload.to].push({
+        type: payload.type,
+        from: payload.from,
+        message: payload.message,
+        date: payload.date
+      });
+      return newState;
+    case actionTypes.RECEIVE_PRIVATE_MESSAGE:
+      if (!(payload.from in newState.messageList)) {
+        newState.messageList[payload.from] = [];
+      }
+      newState.messageList[payload.from].push({
         type: payload.type,
         from: payload.from,
         message: payload.message,
@@ -22,6 +35,9 @@ const reducer = (state = initState, action) => {
       newState.onlineUsers = JSON.parse(JSON.stringify(payload));
       return newState;
     case actionTypes.CHANGE_ROOM_TITLE:
+      if (!(payload in newState.messageList)) {
+        newState.messageList[payload] = [];
+      }
       newState.roomTitle = payload;
       return newState;
     default:

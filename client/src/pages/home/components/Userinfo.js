@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import md5 from 'md5';
 import {
   UserinfoWrapper
 } from '../styled';
 
 class Userinfo extends Component {
   render() {
-    const { username } = this.props;
+    const { account, username } = this.props;
     return (
       <UserinfoWrapper>
         <div className='avatar'>
           <a href='/'>
-            <img alt='alt' src='https://avatars1.githubusercontent.com/u/22176164?s=460&v=4' />
+            <img alt='alt' src={`https://www.gravatar.com/avatar/${md5(account)}?f=y&d=identicon`} />
           </a>
         </div>
         <div className='info'>

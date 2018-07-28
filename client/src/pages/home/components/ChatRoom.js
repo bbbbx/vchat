@@ -8,16 +8,16 @@ import { actionCreators } from '../store';
 
 class ChatRoom extends Component {
   render() {
-    const { account, changeRoomTitle } = this.props;
+    const { nickname, account, roomTitle, changeRoomTitle } = this.props;
     const hashedAccount = md5(account);
     return (
-      <ChatRoomWrapper onClick={() => changeRoomTitle(account)}>
+      <ChatRoomWrapper className={roomTitle === nickname && 'active'} onClick={() => changeRoomTitle(account)}>
         <div className='avatar'>
           <img alt={account} src={`https://www.gravatar.com/avatar/${hashedAccount}?f=y&d=identicon`} />
         </div>
         <div className='info'>
           <h3 className='nickname'>
-            <span className='nickname-text'>{this.props.nickname}</span>
+            <span className='nickname-text'>{nickname}</span>
           </h3>
         </div>
       </ChatRoomWrapper>
@@ -26,7 +26,8 @@ class ChatRoom extends Component {
 }
 
 const mapStateToProps = state => ({
-  friends: state.login.friends
+  friends: state.login.friends,
+  roomTitle: state.home.roomTitle
 });
 
 const mapDispatchToProps = dispatch => ({

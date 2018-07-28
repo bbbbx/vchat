@@ -31,10 +31,14 @@ io.on('connection', socket => {
     if (err) throw err;
     console.log(clients);
   });
-  socket.on('message', ({ from, message, date }) => {
-    console.log(from, message, date);
-    socket.broadcast.send({ type: 'public', message, date, from });  // 广播给其他用户
-    socket.send({ type: 'my_message', message, date, from });  // 发给自己
+  socket.on('message', data => {
+    console.log(data);
+    if (data.to !== 'public') {
+      io.to(data.to).send({ type: 'public', ...data });  // 广播给其他用户
+    } else {
+      socket.broadcast.send({ type: 'public', ...data });  // 广播给其他用户
+      socket.send({ type: 'my_message', ...data });  // 发给自己
+    }
   });
 
   socket.on('disconnect', reason => {

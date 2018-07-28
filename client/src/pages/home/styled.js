@@ -57,6 +57,9 @@ export const ChatRoomWrapper = styled.div`
   cursor: pointer;
   height: 64px;
   color: white;
+  &.active {
+    background: #3a3f45;
+  }
   .avatar {
     float: left;
     margin-right: 10px;
