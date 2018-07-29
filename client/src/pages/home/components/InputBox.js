@@ -5,6 +5,7 @@ import 'dayjs/locale/zh-cn';
 import {
   InputWrapper
 } from '../styled';
+import { actionCreators } from '../store';
 dayjs.locale('zh-cn');
 
 class InputBox extends Component {
@@ -54,13 +55,22 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   handleSendMessage(username, roomTitle, contentDOM, socket, scrollMessageList) {
-    // [TODO] 显示自己私聊给他人的信息
+    const date = dayjs().format('HH:mm');
+    // 广播自己发送的消息给其他人
     socket.send({
       from: username,
       to: roomTitle,
       message: contentDOM.innerHTML,
-      date: dayjs().format('HH:mm')
+      date
     });
+    // 显示自己发送的消息
+    dispatch(actionCreators.pushMessage({
+      type: 'my_message',
+      from: username,
+      to: roomTitle,
+      message: contentDOM.innerHTML,
+      date
+    }));
     contentDOM.innerHTML = null;
     scrollMessageList();
   },

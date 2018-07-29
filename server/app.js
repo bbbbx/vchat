@@ -33,11 +33,12 @@ io.on('connection', socket => {
   });
   socket.on('message', data => {
     console.log(data);
-    if (data.to !== 'public') {
-      io.to(data.to).send({ type: 'public', ...data });  // 广播给其他用户
-    } else {
-      socket.broadcast.send({ type: 'public', ...data });  // 广播给其他用户
-      socket.send({ type: 'my_message', ...data });  // 发给自己
+    
+    if (data.to !== '人民广场') {  // 私聊
+      io.to(data.to).send({ type: 'other_message', ...data });  // 广播给私聊对象所处的 room
+    } else {  // 公聊
+      socket.broadcast.send({ type: 'other_message', ...data });  // 广播给其他用户
+      // socket.send({ type: 'my_message', ...data });  // 发给自己
     }
   });
 

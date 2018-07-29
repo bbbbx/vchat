@@ -58,7 +58,7 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <Chatlist list={['public', 'private chat room 1', 'private chat room 2', 'private chat room 3', 'private chat room 4', 'private chat room 5', 'private chat room 6']} />
+                <Chatlist list={['人民广场']} />
               </TabPanel>
               <TabPanel>
                 <Chatlist list={friends} />
@@ -74,8 +74,8 @@ class Home extends Component {
                 messageList[roomTitle].map((item, index) => (
                   <li key={item.message + item.date + index}>
                     <div className='date'>{item.date}</div>
-                    {
-                      item.type === 'public' && (
+                    { // 别人发送的消息，显示名称
+                      item.type === 'other_message' && (
                         <Fragment>
                           <img className='avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />
                           <div>
@@ -85,7 +85,7 @@ class Home extends Component {
                         </Fragment>
                       )
                     }
-                    {
+                    { // 自己发送的消息，不显示名称
                       item.type === 'my_message' && (
                         <Fragment>
                           <img className='avatar my-avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />

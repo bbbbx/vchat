@@ -2,10 +2,10 @@ import * as actionTypes from './actionTypes';
 
 const initState = {
   messageList: {
-    'public': []
+    '人民广场': []
   },
   onlineUsers: [],
-  roomTitle: 'public'
+  roomTitle: '人民广场'
 };
 
 const reducer = (state = initState, action) => {
@@ -21,10 +21,17 @@ const reducer = (state = initState, action) => {
       });
       return newState;
     case actionTypes.RECEIVE_PRIVATE_MESSAGE:
-      if (!(payload.from in newState.messageList)) {
-        newState.messageList[payload.from] = [];
-      }
+      !(payload.from in newState.messageList) && (newState.messageList[payload.from] = []); 
       newState.messageList[payload.from].push({
+        type: payload.type,
+        from: payload.from,
+        message: payload.message,
+        date: payload.date
+      });
+      return newState;
+    case actionTypes.PUSH_MESSAGE:
+      !(payload.to in newState.messageList) && (newState.messageList[payload.to] = []); 
+      newState.messageList[payload.to].push({
         type: payload.type,
         from: payload.from,
         message: payload.message,

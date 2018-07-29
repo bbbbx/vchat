@@ -8,7 +8,12 @@ export const receiveMessage = payload => ({
 export const receivePrivateMessage = payload => ({
   type: actionTypes.RECEIVE_PRIVATE_MESSAGE,
   payload
-})
+});
+
+export const pushMessage = payload => ({
+  type: actionTypes.PUSH_MESSAGE,
+  payload
+});
 
 export const updateOnlineUsers = onlineUsers => ({
   type: actionTypes.UPDATE_ONLINE_USERS,
