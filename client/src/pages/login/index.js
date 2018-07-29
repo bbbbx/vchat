@@ -44,7 +44,7 @@ class Login extends Component {
                 <LoginWrapper>
                   <LoginBox>
                     <Title>登录</Title>
-                    <Input placeholder='账号' onChange={handleChangeAccount} />
+                    <Input placeholder='账号' onChange={handleChangeAccount} autoFocus />
                     <Input placeholder='密码' type='password' onChange={handleChangePassword} />
                     <Button className="login" onClick={() => handleLogin(account, password)}>登录</Button>
                     <LinkWrapper>

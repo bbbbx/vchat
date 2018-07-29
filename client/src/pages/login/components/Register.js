@@ -37,7 +37,7 @@ class Register extends Component {
                 ? <Title className='message'>{message}</Title>
                 : <Title>注册</Title>
             }
-            <Input placeholder='账号' onChange={handleChangeAccount} />
+            <Input placeholder='账号' onChange={handleChangeAccount} autoFocus />
             <Input placeholder='用户名' onChange={handleChangeUsername} />
             <Input placeholder='密码' type='password' onChange={e => handleChangePassword(e, this.confirmPasswordDOM)} />
             <Input innerRef={DOM => this.confirmPasswordDOM = DOM} required placeholder='确认密码' type='password' onChange={e => confirmPasswordEqual(e, password)} />
