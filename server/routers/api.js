@@ -13,23 +13,30 @@ const {
 const { createToken, verifyToken, hashPassword, checkPassword } = require('../helper');
 
 router.get('/users', async ctx => {
-  const { token, secretKey } = ctx.query;
-  const users = await UserModel.find();
+  const { token, secretKey, field, value } = ctx.query;
 
-  verifyToken(token, secretKey, (err, decode) => {
-    if (err) {
-      ctx.body = {
-        ...TOKEN_ERROR,
-        err
-      };
-    } else {
-      ctx.body = {
-        ...OK,
-        data: users,
-        decode
-      };
-    }
-  });
+  if (!field || !value || !token || !secretKey) {
+    ctx.body = {
+      ...PARAMETER_ERROR
+    };
+  } else {
+    const users = await UserModel.find({ [field]: new RegExp(value, 'i') });
+    verifyToken(token, secretKey, (err, decode) => {
+      if (err) {
+        ctx.body = {
+          ...TOKEN_ERROR,
+          err
+        };
+      } else {
+        ctx.body = {
+          ...OK,
+          data: users,
+          decode
+        };
+      }
+    });
+  }
+  
 });
 
 router.post('/users/login', koaBody(), async ctx => {
