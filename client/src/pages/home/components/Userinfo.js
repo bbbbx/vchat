@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'md5';
 import {
   UserinfoWrapper
 } from '../styled';
 
-class Userinfo extends Component {
+class Userinfo extends PureComponent {
   render() {
     const { account, username } = this.props;
     return (

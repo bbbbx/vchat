@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../styled';
 import { actionCreators } from '../store';
 
-class Register extends Component {
+class Register extends PureComponent {
   render() {
     const {
       loading,

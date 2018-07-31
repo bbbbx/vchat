@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -6,7 +6,7 @@ import {
 } from '../styled';
 import ChatRoom from './ChatRoom';
 
-class Chatlist extends Component {
+class Chatlist extends PureComponent {
   render() {
     const { list } = this.props;
     return (

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
@@ -8,7 +8,7 @@ import {
 import { actionCreators } from '../store';
 dayjs.locale('zh-cn');
 
-class InputBox extends Component {
+class InputBox extends PureComponent {
   render() {
     const { username, roomTitle, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
     console.log(dayjs().format('HH:mm'));
@@ -23,12 +23,11 @@ class InputBox extends Component {
           contentEditable 
           className='content' 
           onKeyPress={e => {
-            // e.preventDefault();
-            if (e.ctrlKey) {
-              handleNextLine(this.contentDOM); 
-              return true;
-            }  
-            e.charCode === 13 && handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList); 
+            if (e.ctrlKey && e.charCode === 13) {
+              handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList);
+            } else if (e.charCode === 13) {
+              // e.preventDefault();
+            }
           }}
           ref={DOM => {
             this.contentDOM = DOM
@@ -39,8 +38,8 @@ class InputBox extends Component {
           }}
         ></div>
         <div className='action'>
-          <span className='tips'>按下Ctrl+Enter换行</span>
-          <span className='btn' onClick={() => handleSendMessage(username, this.contentDOM, socket, scrollMessageList)}>发送</span>
+          <span className='tips'>按下Ctrl+Enter发送消息</span>
+          <span className='btn' onClick={() => handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList)}>发送</span>
         </div>
       </InputWrapper>
     );
@@ -71,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
       message: contentDOM.innerHTML,
       date
     }));
-    contentDOM.innerHTML = null;
+    contentDOM.innerText = '';
     scrollMessageList();
   },
   handleNextLine(contentDOM) {

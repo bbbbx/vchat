@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import md5 from 'md5';
 import {
@@ -6,7 +6,7 @@ import {
 } from '../styled';
 import { actionCreators } from '../store';
 
-class ChatRoom extends Component {
+class ChatRoom extends PureComponent {
   render() {
     const { nickname, account, roomTitle, changeRoomTitle } = this.props;
     const hashedAccount = md5(account);

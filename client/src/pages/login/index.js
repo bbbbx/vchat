@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -14,7 +14,7 @@ import {
 import { actionCreators } from './store';
 import Register from './components/Register';
 
-class Login extends Component {
+class Login extends PureComponent {
   componentDidMount() {
     console.log(`Login componentDidMount`);
   }
