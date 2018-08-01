@@ -39,7 +39,8 @@ class Home extends Component {
   }
 
   componentDidUpdate() {
-    this.messageListDOM.children[this.messageListDOM.children.length-1].scrollIntoViewIfNeeded(true);
+    this.messageListDOM.children.length !== 0
+      && this.messageListDOM.children[this.messageListDOM.children.length-1].scrollIntoViewIfNeeded(true);
   }
 
   render() {

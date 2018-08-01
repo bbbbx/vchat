@@ -55,6 +55,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleSendMessage(username, roomTitle, contentDOM, socket) {
     const date = dayjs().format('HH:mm');
+    if (!contentDOM.innerHTML) {
+      alert('消息不能为空');
+      return ;
+    }
     // 广播自己发送的消息给其他人
     socket.send({
       from: username,
