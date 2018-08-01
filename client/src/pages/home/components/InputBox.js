@@ -10,7 +10,7 @@ dayjs.locale('zh-cn');
 
 class InputBox extends PureComponent {
   render() {
-    const { username, roomTitle, socket, handleSendMessage, handleNextLine, scrollMessageList } = this.props;
+    const { username, roomTitle, socket, handleSendMessage } = this.props;
     console.log(dayjs().format('HH:mm'));
     return (
       <InputWrapper>
@@ -24,7 +24,7 @@ class InputBox extends PureComponent {
           className='content' 
           onKeyPress={e => {
             if (e.ctrlKey && e.charCode === 13) {
-              handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList);
+              handleSendMessage(username, roomTitle, this.contentDOM, socket);
             } else if (e.charCode === 13) {
               // e.preventDefault();
             }
@@ -39,7 +39,7 @@ class InputBox extends PureComponent {
         ></div>
         <div className='action'>
           <span className='tips'>按下Ctrl+Enter发送消息</span>
-          <span className='btn' onClick={() => handleSendMessage(username, roomTitle, this.contentDOM, socket, scrollMessageList)}>发送</span>
+          <span className='btn' onClick={() => handleSendMessage(username, roomTitle, this.contentDOM, socket)}>发送</span>
         </div>
       </InputWrapper>
     );
@@ -53,7 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSendMessage(username, roomTitle, contentDOM, socket, scrollMessageList) {
+  handleSendMessage(username, roomTitle, contentDOM, socket) {
     const date = dayjs().format('HH:mm');
     // 广播自己发送的消息给其他人
     socket.send({
@@ -71,16 +71,6 @@ const mapDispatchToProps = dispatch => ({
       date
     }));
     contentDOM.innerText = '';
-    scrollMessageList();
-  },
-  handleNextLine(contentDOM) {
-    contentDOM.innerHTML += '<br />';
-    contentDOM.focus();
-    var range = window.getSelection();   //创建range
-    range.selectAllChildren(contentDOM); //range 选择obj下所有子内容
-    range.collapseToEnd();               //光标移至最后
-
-    contentDOM.scrollTop = contentDOM.scrollHeight;
   }
 });
 

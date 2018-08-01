@@ -8,15 +8,18 @@ import {
   HomeWrapper,
   HomeLeft,
   HomeRight,
-  ContentWrapper
+  ContentWrapper,
+  SearchWrapper
 } from './styled';
 import { actionCreators as loginActionCreators } from '../login/store';
 import { actionCreators as homeActionCreators } from './store';
 import Userinfo from './components/Userinfo';
+import Search from './components/Search';
 import Chatlist from './components/Chatlist';
 import InputBox from './components/InputBox';
 import '../../statics/iconfont/iconfont';
 import '../../statics/iconfont/styled';
+import axios from 'axios';
 
 class Home extends Component {
   componentDidMount() {
@@ -35,14 +38,25 @@ class Home extends Component {
     }
   }
 
+  componentDidUpdate() {
+    this.messageListDOM.children[this.messageListDOM.children.length-1].scrollIntoViewIfNeeded(true);
+  }
+
   render() {
-    const { friends, messageList, isLogin, socket, roomTitle } = this.props;
+    const { 
+      token,
+      friends, 
+      messageList, 
+      isLogin, 
+      socket, 
+      roomTitle
+    } = this.props;
     if (isLogin && socket) {
       return (
         <HomeWrapper>
           <HomeLeft>
-            <Userinfo>
-            </Userinfo>
+            <Userinfo />
+
             <Tabs>
               <TabList>
                 <Tab>
@@ -97,9 +111,7 @@ class Home extends Component {
                 ))
               }
             </ContentWrapper>
-            <InputBox scrollMessageList={() => {
-              this.messageListDOM.scrollTop = this.messageListDOM.scrollHeight - 104;
-            }} />
+            <InputBox />
           </HomeRight>
         </HomeWrapper>
       );
@@ -110,6 +122,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
+  token: state.login.token,
   isLogin: state.login.isLogin,
   account: state.login.account,
   username: state.login.username,
