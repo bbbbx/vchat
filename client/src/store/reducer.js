@@ -13,7 +13,7 @@ const loginPersistConfig = {
 const homeersistConfig = {
   key: 'home',
   storage: storage,
-  blacklist: ['onlineUsers', 'roomTitle']
+  blacklist: ['onlineUsers', 'roomTitle', 'showSearchUsers', 'searchedUsers']
 };
 
 const rootReducer = combineReducers({

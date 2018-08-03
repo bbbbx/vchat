@@ -9,17 +9,15 @@ import {
   HomeLeft,
   HomeRight,
   ContentWrapper,
-  SearchWrapper
 } from './styled';
 import { actionCreators as loginActionCreators } from '../login/store';
 import { actionCreators as homeActionCreators } from './store';
 import Userinfo from './components/Userinfo';
-import Search from './components/Search';
+import SearchUser from './components/SearchUser';
 import Chatlist from './components/Chatlist';
 import InputBox from './components/InputBox';
 import '../../statics/iconfont/iconfont';
 import '../../statics/iconfont/styled';
-import axios from 'axios';
 
 class Home extends Component {
   componentDidMount() {
@@ -57,6 +55,7 @@ class Home extends Component {
         <HomeWrapper>
           <HomeLeft>
             <Userinfo />
+            <SearchUser />
 
             <Tabs>
               <TabList>
@@ -73,7 +72,7 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <Chatlist list={['人民广场']} />
+                <Chatlist list={Object.keys(messageList)} />
               </TabPanel>
               <TabPanel>
                 <Chatlist list={friends} />

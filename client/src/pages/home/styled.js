@@ -5,7 +5,6 @@ export const HomeWrapper = styled.main`
   margin: 0 12%;
   height: 100%;
   border-radius: 3px;
-  // background: yellowgreen;
 `;
 
 export const HomeLeft = styled.div`
@@ -17,7 +16,7 @@ export const HomeLeft = styled.div`
 `;
 
 export const UserinfoWrapper = styled.div`
-  flex: 1;
+  flex: 2;
   display: flex;
   flex-direction: row;
   color: white;
@@ -44,6 +43,63 @@ export const UserinfoWrapper = styled.div`
   }
 `;
 
+export const SearchWrapper = styled.div`
+  flex: 1;
+  position: relative;
+  .searchbox {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    height: calc(100% - 10px);
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    line-height: 2em;
+    border-radius: 10px;
+  }
+  .searched-users {
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    position: absolute;
+    background: white;
+    width: 100%;
+    .user {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      .avatar {
+        flex: 1;
+        padding: 5px;
+        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+      }
+      .user-info {
+        flex: 1 1 calc(100% / 3);
+        .info {
+          margin: 0;
+          padding: 1px;
+        }
+        .account {
+          font-size: 12px;
+          color: #999;
+        }
+      }
+      .btn-success {
+        flex: 1 1 calc(100% / 3);
+        background: yellowgreen;
+        border-radius: 5px;
+        margin: 5px;
+        font-weight: bold;
+        color: #292C33;
+      }
+    }
+  }
+`;
+
 export const ChatlistWrapper = styled.div`
   flex: 4;
   overflow: auto;
@@ -52,7 +108,7 @@ export const ChatlistWrapper = styled.div`
 export const ChatRoomWrapper = styled.div`
   overflow: hidden;
   padding: 12px 18px 11px;
-  border-bottom: 1px solid #292c33;
+  border-bottom: 1px solid #292C33;
   position: relative;
   cursor: pointer;
   height: 64px;

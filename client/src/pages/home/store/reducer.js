@@ -5,7 +5,9 @@ const initState = {
     '人民广场': []
   },
   onlineUsers: [],
-  roomTitle: '人民广场'
+  roomTitle: '人民广场',
+  showSearchUsers: false,
+  searchedUsers: []
 };
 
 const reducer = (state = initState, action) => {
@@ -47,6 +49,16 @@ const reducer = (state = initState, action) => {
       }
       newState.roomTitle = payload;
       return newState;
+    case actionTypes.TOGGLE_SHOW_SEARCH_USERS:
+      return {
+        ...newState,
+        showSearchUsers: payload
+      };
+    case actionTypes.CHANGE_SEARCH_USERS:
+      return {
+        ...newState,
+        searchedUsers: payload
+      }
     default:
       return newState;
   }
