@@ -9,6 +9,7 @@ let userSchema = new Schema({
   },
   username: String,
   password: String,
+  gender: Number,
   friends: [String],
   avatarURL: {
     type: String,

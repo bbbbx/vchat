@@ -12,6 +12,36 @@ const {
 } = require('../constants');
 const { createToken, verifyToken, hashPassword, checkPassword } = require('../helper');
 
+router.get('/users/:account', async ctx => {
+  const { account } = ctx.params;
+  const { token, secretKey } = ctx.query;
+  if (!token || !secretKey || !account) {
+    ctx.body = {
+      ...PARAMETER_ERROR
+    };
+  } else {
+    const users = await UserModel.findOne({ account });
+    verifyToken(token, secretKey, (err, decode) => {
+      if (err) {
+        ctx.body = {
+          ...TOKEN_ERROR,
+          err
+        };
+      } else if (!users) {
+        ctx.body = {
+          ...USER_NOT_EXIST
+        };
+      } else {
+        ctx.body = {
+          ...OK,
+          data: users,
+          decode
+        };
+      }
+    });
+  }
+});
+
 router.get('/users', async ctx => {
   const { token, secretKey, field, value } = ctx.query;
 
