@@ -14,27 +14,27 @@ const { createToken, verifyToken, hashPassword, checkPassword } = require('../he
 
 router.get('/users/:account', async ctx => {
   const { account } = ctx.params;
-  const { token, secretKey } = ctx.query;
-  if (!token || !secretKey || !account) {
+  const { token } = ctx.query;
+  if (!token || !account) {
     ctx.body = {
       ...PARAMETER_ERROR
     };
   } else {
-    const users = await UserModel.findOne({ account });
-    verifyToken(token, secretKey, (err, decode) => {
+    const user = await UserModel.findOne({ account });
+    verifyToken(token, (err, decode) => {
       if (err) {
         ctx.body = {
           ...TOKEN_ERROR,
           err
         };
-      } else if (!users) {
+      } else if (!user) {
         ctx.body = {
           ...USER_NOT_EXIST
         };
       } else {
         ctx.body = {
           ...OK,
-          data: users,
+          data: user,
           decode
         };
       }
@@ -43,15 +43,15 @@ router.get('/users/:account', async ctx => {
 });
 
 router.get('/users', async ctx => {
-  const { token, secretKey, field, value } = ctx.query;
+  const { token, field, value } = ctx.query;
 
-  if (!field || !value || !token || !secretKey) {
+  if (!field || !value || !token ) {
     ctx.body = {
       ...PARAMETER_ERROR
     };
   } else {
     const users = await UserModel.find({ [field]: new RegExp(value, 'i') });
-    verifyToken(token, secretKey, (err, decode) => {
+    verifyToken(token, (err, decode) => {
       if (err) {
         ctx.body = {
           ...TOKEN_ERROR,
@@ -143,6 +143,48 @@ router.post('/users/register', koaBody(), async ctx => {
       ...PARAMETER_ERROR
     };
   }
+});
+
+router.patch('/user/friend', koaBody(), async ctx => {
+  const { token, account, friend } = ctx.request.body;
+  if (!token || !friend || !account) {
+    ctx.body = {
+      ...PARAMETER_ERROR
+    }
+  } else {
+    const user = await UserModel.findOne({ account });
+    const friendModel = await UserModel.findOne({ account: friend });
+    let decode;
+    try {
+      decode = verifyToken(token);
+    } catch(error) {
+      decode = error;
+    }
+    if (decode instanceof Error) {
+      ctx.body = {
+        ...TOKEN_ERROR,
+        decode
+      };
+    } else if(!user || !friendModel) {
+      ctx.body = {
+        ...USER_NOT_EXIST,
+      };
+    } else if (user.friends.includes(friend)) {
+      ctx.body = {
+        code: 20009,
+        message: '用户已添加该好友'
+      };
+    } else {
+      user.friends.push(friend);
+      const updatedUser = await user.save();
+      ctx.body = {
+        ...OK,
+        data: updatedUser,
+        decode
+      };
+    }
+  };
+
 });
 
 module.exports = router;

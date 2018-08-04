@@ -27,11 +27,14 @@ const TOKEN_ERROR = {
   message: '验证 Token 错误'
 };
 
+const SECRET_KEY = 'a5717a649d346ed0c51be68888c130cd';
+
 module.exports = {
   OK,
   USER_ALREADY_EXIST,
   USER_NOT_EXIST,
   PASSWORD_ERROR,
   PARAMETER_ERROR,
-  TOKEN_ERROR
+  TOKEN_ERROR,
+  SECRET_KEY
 };
