@@ -88,13 +88,21 @@ export const SearchWrapper = styled.div`
           color: #999;
         }
       }
-      .btn-success {
+      .btn {
         flex: 1 1 calc(100% / 3);
-        background: yellowgreen;
         border-radius: 5px;
         margin: 5px;
-        font-weight: bold;
+        font-size: 1.2em;
+        background: white;
+        color: black;
+      }
+      .btn-success {
+        background: yellowgreen;
         color: #292C33;
+      }
+      .btn-disable {
+        background: white;
+        color: #818182;
       }
     }
   }

@@ -86,6 +86,11 @@ const reducer = (state = initState, action) => {
       return {
         ...initState
       };
+    case actionTypes.CHANGE_FRIENDS:
+      return {
+        ...state,
+        friends: payload
+      };
     default:
       return {
         ...state

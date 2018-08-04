@@ -16,6 +16,11 @@ const loading = payload => ({
   payload
 });
 
+const changeFriends = friends => ({
+  type: actionTypes.CHANGE_FRIENDS,
+  payload: friends
+});
+
 export const connectSocket = payload => ({
   type: actionTypes.CONNECT_SOCKET,
   payload
@@ -117,3 +122,20 @@ export const register = payload => dispatch => {
       console.error(err);
     });
 };
+
+export const addFriend = (token, account, friend) => dispatch => {
+  axios
+    .patch('http://localhost:8000/api/user/friend', {
+      token,
+      account,
+      friend
+    })
+    .then((({ data }) => {
+      if (data.code === 0) {
+        dispatch(changeFriends(data.data.friends));
+        alert('添加成功');
+      } else {
+        alert(data.message);
+      }
+    }));
+}
