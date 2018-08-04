@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import {
   SearchWrapper
 } from '../styled';
@@ -14,7 +15,7 @@ class SearchUser extends PureComponent {
   }
 
   renderSearchedUsers() {
-    const { showSearchUsers, searchedUsers } = this.props;
+    const { token, account, showSearchUsers, searchedUsers, handleAddFriend } = this.props;
     if (showSearchUsers && searchedUsers.length !== 0) {
       return searchedUsers.map(item => (
         <div key={item.account} className='user'>
@@ -25,11 +26,7 @@ class SearchUser extends PureComponent {
           </div>
           <button 
             className='btn-success'
-            onClick={() => {
-              if (window.confirm('确定添加吗？')) {
-                console.log(item.account);
-              }
-            }}
+            onClick={() => handleAddFriend(token, account, item.account)}
           >
             添加好友
           </button>
@@ -69,6 +66,7 @@ class SearchUser extends PureComponent {
 
 const mapStateToProps = state => ({
   token: state.login.token,
+  account: state.login.account,
   showSearchUsers: state.home.showSearchUsers,
   searchedUsers: state.home.searchedUsers
 });
@@ -83,6 +81,26 @@ const mapDispatchToProps = dispatch => ({
       return ;
     }
     dispatch(actionCreators.getUsers(token, searchDOM.value));
+  },
+  handleAddFriend(token, account, friend) {
+    if (window.confirm('确定添加吗？')) {
+      console.log(token, account, friend);
+      axios
+        .patch('http://localhost:8000/api/user/friend', {
+          token,
+          account,
+          friend
+        })
+        .then((({ data }) => {
+          console.log(data);
+          if (data.code === 0) {
+            // [TODO] 更新本地 state.login.friends
+            alert('添加成功');
+          } else {
+            alert(data.message);
+          }
+        }));
+    }
   }
 });
 

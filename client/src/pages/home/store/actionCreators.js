@@ -41,7 +41,6 @@ export const getUsers = (token, username) => dispatch => {
     .get('http://localhost:8000/api/users', {
       params: {
         token,
-        secretKey: 'a5717a649d346ed0c51be68888c130cd',
         field: 'username',
         value: username
       }
