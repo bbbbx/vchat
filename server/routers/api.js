@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const koaBody = require('koa-body');
+const md5 = require('md5');
 const router = new Router({ prefix: '/api' });
 let UserModel = require('../models/user');
 const { 
@@ -117,7 +118,8 @@ router.post('/users/register', koaBody(), async ctx => {
       let newUser = new UserModel({
         account,
         username,
-        password: hashedPassword
+        password: hashedPassword,
+        avatarURL: `https://www.gravatar.com/avatar/${md5(account)}?f=y&d=identicon`
       });
       await newUser.save();
       const token = createToken({
@@ -152,8 +154,8 @@ router.patch('/user/friend', koaBody(), async ctx => {
       ...PARAMETER_ERROR
     }
   } else {
-    const user = await UserModel.findOne({ account });
-    const friendModel = await UserModel.findOne({ account: friend });
+    const userQuery = await UserModel.findOne({ account });
+    const friendQuery = await UserModel.findOne({ account: friend });
     let decode;
     try {
       decode = verifyToken(token);
@@ -165,18 +167,18 @@ router.patch('/user/friend', koaBody(), async ctx => {
         ...TOKEN_ERROR,
         decode
       };
-    } else if(!user || !friendModel) {
+    } else if(!userQuery || !friendQuery) {
       ctx.body = {
         ...USER_NOT_EXIST,
       };
-    } else if (user.friends.includes(friend)) {
+    } else if (userQuery.friends.includes(friend)) {
       ctx.body = {
         code: 20009,
         message: '用户已添加该好友'
       };
     } else {
-      user.friends.push(friend);
-      const updatedUser = await user.save();
+      userQuery.friends.push(friend);
+      const updatedUser = await userQuery.save();
       ctx.body = {
         ...OK,
         data: updatedUser,

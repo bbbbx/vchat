@@ -50,26 +50,29 @@ export const SearchWrapper = styled.div`
     display: block;
     box-sizing: border-box;
     margin-bottom: 10px;
-    height: calc(100% - 10px);
+    height: 70%;
     width: 100%;
     padding: 10px;
     font-size: 1em;
     line-height: 2em;
     border-radius: 10px;
+    background-color: #26292e;
+    color: white;
   }
   .searched-users {
-    display: flex;
-    flex-direction: column;
     z-index: 10;
     position: absolute;
     background: white;
     width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
     .user {
-      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       border-bottom: 1px solid #ccc;
+      margin-top: 5px;
+      margin-bottom: 5px;
       .avatar {
         flex: 1;
         padding: 5px;
@@ -79,6 +82,7 @@ export const SearchWrapper = styled.div`
       }
       .user-info {
         flex: 1 1 calc(100% / 3);
+        border-radius: 3px;
         .info {
           margin: 0;
           padding: 1px;
@@ -86,6 +90,12 @@ export const SearchWrapper = styled.div`
         .account {
           font-size: 12px;
           color: #999;
+        }
+        .not-match {
+          margin: 0;
+          padding: 3px 9px;
+          font-weight: 400;
+          margin-top: 10px;
         }
       }
       .btn {
@@ -104,6 +114,9 @@ export const SearchWrapper = styled.div`
         background: white;
         color: #818182;
       }
+    }
+    .user:last-child {
+      border-bottom: 0;
     }
   }
 `;

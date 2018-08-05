@@ -53,7 +53,7 @@ class SearchUser extends PureComponent {
       return (
         <div className='user'>
           <div className='user-info'>
-            <p>查无此人</p>
+            <h4 className='not-match'>查无此人</h4>
           </div>
         </div>
       );
@@ -71,7 +71,8 @@ class SearchUser extends PureComponent {
           className='searchbox'  
           placeholder='🔍搜索' 
           onFocus={() => toggleShowSearchUsers(true)}
-          onChange={() => handleSearchChange(token, this.searchDOM)} /> 
+          onChange={() => handleSearchChange(token, this.searchDOM)}
+        /> 
         <div className='searched-users'>
           {this.renderSearchedUsers()}
         </div>
