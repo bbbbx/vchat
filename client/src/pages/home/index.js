@@ -2,20 +2,18 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
-import md5 from 'md5';
 import './react-tabs.css';
 import {
   HomeWrapper,
   HomeLeft,
-  HomeRight,
-  ContentWrapper,
+  HomeRight
 } from './styled';
 import { actionCreators as loginActionCreators } from '../login/store';
 import { actionCreators as homeActionCreators } from './store';
 import Userinfo from './components/Userinfo';
 import SearchUser from './components/SearchUser';
 import Chatlist from './components/Chatlist';
-import InputBox from './components/InputBox';
+import ChatWindow from './components/ChatWindow';
 import '../../statics/iconfont/iconfont';
 import '../../statics/iconfont/styled';
 
@@ -36,19 +34,13 @@ class Home extends Component {
     }
   }
 
-  componentDidUpdate() {
-    this.messageListDOM.children.length !== 0
-      && this.messageListDOM.children[this.messageListDOM.children.length-1].scrollIntoViewIfNeeded(true);
-  }
-
   render() {
     const { 
       token,
       friends, 
       messageList, 
       isLogin, 
-      socket, 
-      roomTitle
+      socket
     } = this.props;
     if (isLogin && socket) {
       return (
@@ -81,37 +73,7 @@ class Home extends Component {
           </HomeLeft>
 
           <HomeRight>
-            <div className='title'>{roomTitle}</div>
-            {/* <ContentBox /> */}
-            <ContentWrapper innerRef={DOM => { this.messageListDOM = DOM; }}>
-              {
-                messageList[roomTitle].map((item, index) => (
-                  <li key={item.message + item.date + index}>
-                    <div className='date'>{item.date}</div>
-                    { // 别人发送的消息，显示名称
-                      item.type === 'other_message' && (
-                        <Fragment>
-                          <img className='avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />
-                          <div>
-                            <h4 className='username' dangerouslySetInnerHTML={{ __html: item.from }} />
-                            <div className='message' dangerouslySetInnerHTML={{ __html: item.message }} />
-                          </div>
-                        </Fragment>
-                      )
-                    }
-                    { // 自己发送的消息，不显示名称
-                      item.type === 'my_message' && (
-                        <Fragment>
-                          <img className='avatar my-avatar' alt={item.from} src={`https://www.gravatar.com/avatar/${md5(item.from)}?f=y&d=identicon`} />
-                          <div className='my-message' dangerouslySetInnerHTML={{ __html: item.message }} />
-                        </Fragment>
-                      )
-                    }
-                  </li>      
-                ))
-              }
-            </ContentWrapper>
-            <InputBox />
+            <ChatWindow />
           </HomeRight>
         </HomeWrapper>
       );
