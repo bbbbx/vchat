@@ -8,10 +8,10 @@ import { actionCreators } from '../store';
 
 class ChatRoom extends PureComponent {
   render() {
-    const { nickname, account, roomTitle, changeRoomTitle } = this.props;
+    const { nickname, account, selectedChatRoom, changeRoomTitle } = this.props;
     const hashedAccount = md5(account);
     return (
-      <ChatRoomWrapper className={roomTitle === nickname && 'active'} onClick={() => changeRoomTitle(account)}>
+      <ChatRoomWrapper className={selectedChatRoom === nickname && 'active'} onClick={() => changeRoomTitle(account)}>
         <div className='avatar'>
           <img alt={account} src={`https://www.gravatar.com/avatar/${hashedAccount}?f=y&d=identicon`} />
         </div>
@@ -27,7 +27,7 @@ class ChatRoom extends PureComponent {
 
 const mapStateToProps = state => ({
   friends: state.login.friends,
-  roomTitle: state.home.roomTitle
+  selectedChatRoom: state.home.selectedChatRoom
 });
 
 const mapDispatchToProps = dispatch => ({

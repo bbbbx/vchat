@@ -1,11 +1,10 @@
 import * as actionTypes from './actionTypes';
 
 const initState = {
-  messageList: {
+  chatRoomList: {
     '人民广场': []
   },
-  onlineUsers: [],
-  roomTitle: '人民广场',
+  selectedChatRoom: '人民广场',
   showSearchUsers: false,
   searchedUsers: []
 };
@@ -15,7 +14,7 @@ const reducer = (state = initState, action) => {
   let newState = JSON.parse(JSON.stringify(state));
   switch(type) {
     case actionTypes.RECEIVE_MESSAGE:
-      newState.messageList[payload.to].push({
+      newState.chatRoomList[payload.to].push({
         type: payload.type,
         from: payload.from,
         message: payload.message,
@@ -23,8 +22,8 @@ const reducer = (state = initState, action) => {
       });
       return newState;
     case actionTypes.RECEIVE_PRIVATE_MESSAGE:
-      !(payload.from in newState.messageList) && (newState.messageList[payload.from] = []); 
-      newState.messageList[payload.from].push({
+      !(payload.from in newState.chatRoomList) && (newState.chatRoomList[payload.from] = []); 
+      newState.chatRoomList[payload.from].push({
         type: payload.type,
         from: payload.from,
         message: payload.message,
@@ -32,22 +31,19 @@ const reducer = (state = initState, action) => {
       });
       return newState;
     case actionTypes.PUSH_MESSAGE:
-      !(payload.to in newState.messageList) && (newState.messageList[payload.to] = []); 
-      newState.messageList[payload.to].push({
+      !(payload.to in newState.chatRoomList) && (newState.chatRoomList[payload.to] = []); 
+      newState.chatRoomList[payload.to].push({
         type: payload.type,
         from: payload.from,
         message: payload.message,
         date: payload.date
       });
       return newState;
-    case actionTypes.UPDATE_ONLINE_USERS:
-      newState.onlineUsers = JSON.parse(JSON.stringify(payload));
-      return newState;
     case actionTypes.CHANGE_ROOM_TITLE:
-      if (!(payload in newState.messageList)) {
-        newState.messageList[payload] = [];
+      if (!(payload in newState.chatRoomList)) {
+        newState.chatRoomList[payload] = [];
       }
-      newState.roomTitle = payload;
+      newState.selectedChatRoom = payload;
       return newState;
     case actionTypes.TOGGLE_SHOW_SEARCH_USERS:
       return {

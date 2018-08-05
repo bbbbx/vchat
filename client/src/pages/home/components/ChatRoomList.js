@@ -6,7 +6,7 @@ import {
 } from '../styled';
 import ChatRoom from './ChatRoom';
 
-class Chatlist extends PureComponent {
+class ChatRoomList extends PureComponent {
   render() {
     const { list } = this.props;
     return (
@@ -21,7 +21,7 @@ class Chatlist extends PureComponent {
   }
 }
 
-Chatlist.propTypes = {
+ChatRoomList.propTypes = {
   list: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
@@ -29,4 +29,4 @@ const mapStateToProps = state => ({
   
 });
 
-export default connect(mapStateToProps, null)(Chatlist);
+export default connect(mapStateToProps, null)(ChatRoomList);

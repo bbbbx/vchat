@@ -8,18 +8,18 @@ import InputBox from './InputBox';
 
 class ChatWindow extends Component {
   componentDidUpdate() {
-    this.messageListDOM.children.length !== 0
-      && this.messageListDOM.children[this.messageListDOM.children.length-1].scrollIntoViewIfNeeded(true);
+    this.chatRoomListDOM.children.length !== 0
+      && this.chatRoomListDOM.children[this.chatRoomListDOM.children.length-1].scrollIntoViewIfNeeded(true);
   }
   
   render() {
-    const { roomTitle, messageList } = this.props;
+    const { selectedChatRoom, chatRoomList } = this.props;
     return (
       <Fragment>
-        <div className='title'>{roomTitle}</div>
-        <ContentWrapper innerRef={DOM => { this.messageListDOM = DOM; }}>
+        <div className='title'>{selectedChatRoom}</div>
+        <ContentWrapper innerRef={DOM => { this.chatRoomListDOM = DOM; }}>
           {
-            messageList[roomTitle].map((item, index) => (
+            chatRoomList[selectedChatRoom].map((item, index) => (
               <li key={item.message + item.date + index}>
                 <div className='date'>{item.date}</div>
                 { // 别人发送的消息，显示名称
@@ -52,8 +52,8 @@ class ChatWindow extends Component {
 }
 
 const mapStateToProps = state => ({
-  roomTitle: state.home.roomTitle,
-  messageList: state.home.messageList
+  selectedChatRoom: state.home.selectedChatRoom,
+  chatRoomList: state.home.chatRoomList
 });
 
 const mapDispatchToProps = dispatch => ({

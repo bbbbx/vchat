@@ -12,7 +12,7 @@ import { actionCreators as loginActionCreators } from '../login/store';
 import { actionCreators as homeActionCreators } from './store';
 import Userinfo from './components/Userinfo';
 import SearchUser from './components/SearchUser';
-import Chatlist from './components/Chatlist';
+import ChatRoomList from './components/ChatRoomList';
 import ChatWindow from './components/ChatWindow';
 import '../../statics/iconfont/iconfont';
 import '../../statics/iconfont/styled';
@@ -38,7 +38,7 @@ class Home extends Component {
     const { 
       token,
       friends, 
-      messageList, 
+      chatRoomList, 
       isLogin, 
       socket
     } = this.props;
@@ -64,10 +64,10 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <Chatlist list={Object.keys(messageList)} />
+                <ChatRoomList list={Object.keys(chatRoomList)} />
               </TabPanel>
               <TabPanel>
-                <Chatlist list={friends} />
+                <ChatRoomList list={friends} />
               </TabPanel>
             </Tabs>
           </HomeLeft>
@@ -90,8 +90,8 @@ const mapStateToProps = state => ({
   username: state.login.username,
   friends: state.login.friends,
   socket: state.login.socket,
-  messageList: state.home.messageList,
-  roomTitle: state.home.roomTitle
+  chatRoomList: state.home.chatRoomList,
+  selectedChatRoom: state.home.selectedChatRoom
 });
 
 const mapDispatchToProps = dispatch => ({
