@@ -53,3 +53,13 @@ export const getUsers = (token, username) => dispatch => {
       alert(error)
     });
 };
+
+export const changeSelectedFriend = friendAccount => ({
+  type: actionTypes.CHANGE_SELECTED_FRIEND,
+  payload: friendAccount
+});
+
+export const changeShowSelectedFriend = show => ({
+  type: actionTypes.CHANGE_SHOW_SELECTED_FRIEND,
+  payload: show
+});

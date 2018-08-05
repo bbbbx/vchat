@@ -14,6 +14,8 @@ import Userinfo from './components/Userinfo';
 import SearchUser from './components/SearchUser';
 import ChatRoomList from './components/ChatRoomList';
 import ChatWindow from './components/ChatWindow';
+import FriendList from './components/FriendList';
+import Friend from './components/Friend';
 import '../../statics/iconfont/iconfont';
 import '../../statics/iconfont/styled';
 
@@ -40,7 +42,9 @@ class Home extends Component {
       friends, 
       chatRoomList, 
       isLogin, 
-      socket
+      socket,
+      showSelectedFriend,
+      handleSelectTabs
     } = this.props;
     if (isLogin && socket) {
       return (
@@ -49,7 +53,7 @@ class Home extends Component {
             <Userinfo />
             <SearchUser />
 
-            <Tabs>
+            <Tabs onSelect={(index, lastIndex, event) => handleSelectTabs(index, lastIndex, event)} >
               <TabList>
                 <Tab>
                   <svg className='icon' aria-hidden='true'>
@@ -67,13 +71,17 @@ class Home extends Component {
                 <ChatRoomList list={Object.keys(chatRoomList)} />
               </TabPanel>
               <TabPanel>
-                <ChatRoomList list={friends} />
+                <FriendList />
               </TabPanel>
             </Tabs>
           </HomeLeft>
 
           <HomeRight>
-            <ChatWindow />
+            {
+              showSelectedFriend
+                ? <Friend />
+                : <ChatWindow />
+            }
           </HomeRight>
         </HomeWrapper>
       );
@@ -91,7 +99,8 @@ const mapStateToProps = state => ({
   friends: state.login.friends,
   socket: state.login.socket,
   chatRoomList: state.home.chatRoomList,
-  selectedChatRoom: state.home.selectedChatRoom
+  selectedChatRoom: state.home.selectedChatRoom,
+  showSelectedFriend: state.home.showSelectedFriend
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -106,7 +115,16 @@ const mapDispatchToProps = dispatch => ({
   },
   receivePrivateMessage(data) {
     dispatch(homeActionCreators.receivePrivateMessage(data));
-  }
+  },
+  handleSelectTabs(index, lastIndex, event) {
+    if (event.type !== 'click') {
+      return ;
+    }
+    index === 1
+      ? dispatch(homeActionCreators.changeShowSelectedFriend(true))
+      : dispatch(homeActionCreators.changeShowSelectedFriend(false));
+  }  
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

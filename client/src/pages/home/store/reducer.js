@@ -5,6 +5,8 @@ const initState = {
     '人民广场': []
   },
   selectedChatRoom: '人民广场',
+  selectedFriend: '',
+  showSelectedFriend: false,
   showSearchUsers: false,
   searchedUsers: []
 };
@@ -54,7 +56,17 @@ const reducer = (state = initState, action) => {
       return {
         ...newState,
         searchedUsers: payload
-      }
+      };
+    case actionTypes.CHANGE_SELECTED_FRIEND:
+      return {
+        ...newState,
+        selectedFriend: payload
+      };
+    case actionTypes.CHANGE_SHOW_SELECTED_FRIEND:
+      return {
+        ...newState,
+        showSelectedFriend: payload
+      };
     default:
       return newState;
   }

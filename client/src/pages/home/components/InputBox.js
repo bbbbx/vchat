@@ -30,11 +30,14 @@ class InputBox extends PureComponent {
             }
           }}
           ref={DOM => {
-            this.contentDOM = DOM
-            setTimeout((DOM = this.contentDOM) => {
+            if (DOM) {
+              this.contentDOM = DOM
               DOM.focus();
-            }, 0);
-            return this.contentDOM;
+              // setTimeout((DOM = this.contentDOM) => {
+              //   DOM.focus();
+              // }, 0);
+              return this.contentDOM;
+            }
           }}
         ></div>
         <div className='action'>

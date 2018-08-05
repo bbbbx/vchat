@@ -7,6 +7,10 @@ import {
 import ChatRoom from './ChatRoom';
 
 class ChatRoomList extends PureComponent {
+  static propTypes = {
+    list: PropTypes.arrayOf(PropTypes.string).isRequired
+  }
+
   render() {
     const { list } = this.props;
     return (
@@ -21,9 +25,9 @@ class ChatRoomList extends PureComponent {
   }
 }
 
-ChatRoomList.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.string).isRequired
-};
+// ChatRoomList.propTypes = {
+//   list: PropTypes.arrayOf(PropTypes.string).isRequired
+// };
 
 const mapStateToProps = state => ({
   

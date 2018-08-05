@@ -26,7 +26,6 @@ class ChatRoom extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  friends: state.login.friends,
   selectedChatRoom: state.home.selectedChatRoom
 });
 

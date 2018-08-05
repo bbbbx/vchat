@@ -18,7 +18,8 @@ const homeersistConfig = {
 
 const rootReducer = combineReducers({
   login: persistReducer(loginPersistConfig, loginReducer),
-  home: persistReducer(homeersistConfig, homeReducer)
+  // home: persistReducer(homeersistConfig, homeReducer)
+  home: homeReducer
 });
 
 // const persistedReducer = persistReducer(rootPersistConfig, rootReducer);

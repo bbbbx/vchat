@@ -340,3 +340,7 @@ export const InputWrapper = styled.div`
     }
   }
 `;
+
+export const FriendWrapper = styled.div`
+
+`;
