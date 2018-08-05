@@ -43,6 +43,9 @@ router.get('/users/:account', async ctx => {
   }
 });
 
+/**
+ * 查询用户
+ */
 router.get('/users', async ctx => {
   const { token, field, value } = ctx.query;
 
@@ -70,6 +73,9 @@ router.get('/users', async ctx => {
   
 });
 
+/**
+ * 登录
+ */
 router.post('/users/login', koaBody(), async ctx => {
   const { account, password } = ctx.request.body;
   if (account && password) {
@@ -108,6 +114,9 @@ router.post('/users/login', koaBody(), async ctx => {
   }
 });
 
+/**
+ * 注册
+ */
 router.post('/users/register', koaBody(), async ctx => {
   const { account, username, password } = ctx.request.body;
 
@@ -147,6 +156,9 @@ router.post('/users/register', koaBody(), async ctx => {
   }
 });
 
+/**
+ * 添加好友
+ */
 router.patch('/user/friend', koaBody(), async ctx => {
   const { token, account, friend } = ctx.request.body;
   if (!token || !friend || !account) {
@@ -171,13 +183,18 @@ router.patch('/user/friend', koaBody(), async ctx => {
       ctx.body = {
         ...USER_NOT_EXIST,
       };
-    } else if (userQuery.friends.includes(friend)) {
+    } else if (userQuery.friends.some(friendObj => friendObj.account === friend)) {
       ctx.body = {
         code: 20009,
         message: '用户已添加该好友'
       };
     } else {
-      userQuery.friends.push(friend);
+      userQuery.friends.push({
+        account: friendQuery.account,
+        username: friendQuery.username,
+        gender: friendQuery.gender,
+        avatarURL: friendQuery.avatarURL
+      });
       const updatedUser = await userQuery.save();
       ctx.body = {
         ...OK,
