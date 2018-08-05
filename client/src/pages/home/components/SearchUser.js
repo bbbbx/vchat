@@ -18,22 +18,23 @@ class SearchUser extends PureComponent {
   renderSearchedUsers() {
     const { token, account, friends, showSearchUsers, searchedUsers, handleAddFriend } = this.props;
     if (showSearchUsers && searchedUsers.length !== 0) {
-      return searchedUsers.map(item => (
-        <div key={item.account} className='user'>
-          <img className='avatar' alt={item.avatarURL} src={item.avatarURL} />
+      return searchedUsers.map(searchedUser => (
+        <div key={searchedUser.account} className='user'>
+          <img className='avatar' alt={searchedUser.avatarURL} src={searchedUser.avatarURL} />
           <div className='user-info'>
-            <p className='info'>用户名：{item.username}</p>
-            <p className='info account'>账号：{item.account}</p>
+            <p className='info'>{searchedUser.username}</p>
+            <p className='info account'>{searchedUser.account}</p>
           </div>
           {
-            friends.includes(item.account)
+            // friends.includes(searchedUser.account)
+            friends.some(friend => friend.account === searchedUser.account)
               ? <button 
                   className='btn btn-disable'
                   disabled={true}
                 >
                   已添加
                 </button>
-              : item.account === account
+              : searchedUser.account === account
                   ? <button 
                       className='btn btn-disable'
                       disabled={true}
@@ -42,7 +43,7 @@ class SearchUser extends PureComponent {
                     </button>
                   : <button 
                       className='btn btn-success'
-                      onClick={() => handleAddFriend(token, account, item.account)}
+                      onClick={() => handleAddFriend(token, account, searchedUser.account)}
                     >
                       添加好友
                     </button>
