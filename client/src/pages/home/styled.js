@@ -342,5 +342,34 @@ export const InputWrapper = styled.div`
 `;
 
 export const FriendWrapper = styled.div`
-
+  height: 100%;
+  .user {
+    height: 50%;
+    margin-top: 200px;
+    text-align: center;
+    .avatar {
+      border-radius: 20px;
+      padding: 10px;
+      height: 50%;
+    }
+    .user-info {
+      height: 80px;
+      .username {
+        height: 30px;
+        line-height: 30px;
+        font-size: 1.2em;
+      }
+      .account {
+        color: #999;
+      }
+    }
+    .send-message {
+      height: 15%;
+      width: 50%;
+      background: yellowgreen;
+      border-radius: 20px;
+      color: white;
+      font-size: 1.2em;
+    }
+  }
 `;

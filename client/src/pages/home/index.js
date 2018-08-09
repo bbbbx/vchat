@@ -38,12 +38,10 @@ class Home extends Component {
 
   render() {
     const { 
-      token,
-      friends, 
+      tabIndex,
       chatRoomList, 
       isLogin, 
       socket,
-      showSelectedFriend,
       handleSelectTabs
     } = this.props;
     if (isLogin && socket) {
@@ -53,7 +51,10 @@ class Home extends Component {
             <Userinfo />
             <SearchUser />
 
-            <Tabs onSelect={(index, lastIndex, event) => handleSelectTabs(index, lastIndex, event)} >
+            <Tabs 
+              selectedIndex={tabIndex}
+              onSelect={index => handleSelectTabs(index)}
+            >
               <TabList>
                 <Tab>
                   <svg className='icon' aria-hidden='true'>
@@ -78,9 +79,12 @@ class Home extends Component {
 
           <HomeRight>
             {
-              showSelectedFriend
-                ? <Friend />
-                : <ChatWindow />
+              tabIndex === 0
+                ? <ChatWindow />
+                : tabIndex === 1
+                  ? <Friend />
+                  : <div>{tabIndex} 错误</div>
+
             }
           </HomeRight>
         </HomeWrapper>
@@ -92,15 +96,11 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  token: state.login.token,
   isLogin: state.login.isLogin,
-  account: state.login.account,
   username: state.login.username,
-  friends: state.login.friends,
   socket: state.login.socket,
   chatRoomList: state.home.chatRoomList,
-  selectedChatRoom: state.home.selectedChatRoom,
-  showSelectedFriend: state.home.showSelectedFriend
+  tabIndex: state.home.tabIndex
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -116,15 +116,9 @@ const mapDispatchToProps = dispatch => ({
   receivePrivateMessage(data) {
     dispatch(homeActionCreators.receivePrivateMessage(data));
   },
-  handleSelectTabs(index, lastIndex, event) {
-    if (event.type !== 'click') {
-      return ;
-    }
-    index === 1
-      ? dispatch(homeActionCreators.changeShowSelectedFriend(true))
-      : dispatch(homeActionCreators.changeShowSelectedFriend(false));
-  }  
-
+  handleSelectTabs(index) {
+    dispatch(homeActionCreators.changeTabIndex(index));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

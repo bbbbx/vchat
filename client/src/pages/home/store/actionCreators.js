@@ -59,7 +59,7 @@ export const changeSelectedFriend = friendAccount => ({
   payload: friendAccount
 });
 
-export const changeShowSelectedFriend = show => ({
-  type: actionTypes.CHANGE_SHOW_SELECTED_FRIEND,
-  payload: show
+export const changeTabIndex = index => ({
+  type: actionTypes.CHANGE_TAB_INDEX,
+  payload: index
 });
