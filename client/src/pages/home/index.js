@@ -21,11 +21,11 @@ import '../../statics/iconfont/styled';
 
 class Home extends Component {
   componentDidMount() {
-    const { username, isLogin, socket, receiveMessage, receivePrivateMessage } = this.props;
+    const { account, isLogin, socket, receiveMessage, receivePrivateMessage } = this.props;
     if (isLogin && socket) {
       socket
         .on('message', data => {
-          if (data.to === username) {
+          if (data.to === account) {
             // 私聊
             receivePrivateMessage(data);
           } else {
@@ -69,7 +69,7 @@ class Home extends Component {
               </TabList>
 
               <TabPanel>
-                <ChatRoomList list={Object.keys(chatRoomList)} />
+                <ChatRoomList />
               </TabPanel>
               <TabPanel>
                 <FriendList />
@@ -97,9 +97,8 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   isLogin: state.login.isLogin,
-  username: state.login.username,
+  account: state.login.account,
   socket: state.login.socket,
-  chatRoomList: state.home.chatRoomList,
   tabIndex: state.home.tabIndex
 });
 

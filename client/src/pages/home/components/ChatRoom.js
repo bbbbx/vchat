@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
 import md5 from 'md5';
 import {
   ChatRoomWrapper
@@ -7,17 +8,23 @@ import {
 import { actionCreators } from '../store';
 
 class ChatRoom extends PureComponent {
+  static propTypes = {
+    chatRoomTitle: propTypes.string.isRequired
+  };
+
   render() {
-    const { nickname, account, selectedChatRoom, changeRoomTitle } = this.props;
-    const hashedAccount = md5(account);
+    const { chatRoomTitle, selectedChatRoom, friends,  changeRoomTitle } = this.props;
+    const friend = friends.filter(friend => friend.account === chatRoomTitle)[0];
     return (
-      <ChatRoomWrapper className={selectedChatRoom === nickname && 'active'} onClick={() => changeRoomTitle(account)}>
+      <ChatRoomWrapper className={selectedChatRoom === chatRoomTitle && 'active'} onClick={() => changeRoomTitle(chatRoomTitle)}>
         <div className='avatar'>
-          <img alt={account} src={`https://www.gravatar.com/avatar/${hashedAccount}?f=y&d=identicon`} />
+          <img 
+            alt={chatRoomTitle} 
+            src={friend? friend.avatarURL: `https://www.gravatar.com/avatar/${md5(chatRoomTitle)}?f=y&d=identicon`} />
         </div>
         <div className='info'>
           <h3 className='nickname'>
-            <span className='nickname-text'>{nickname}</span>
+            <span className='nickname-text'>{chatRoomTitle}</span>
           </h3>
         </div>
       </ChatRoomWrapper>
@@ -26,7 +33,8 @@ class ChatRoom extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  selectedChatRoom: state.home.selectedChatRoom
+  selectedChatRoom: state.home.selectedChatRoom,
+  friends: state.login.friends
 });
 
 const mapDispatchToProps = dispatch => ({

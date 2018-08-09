@@ -11,9 +11,9 @@ export const receiveMessage = payload => ({
   payload
 });
 
-export const receivePrivateMessage = payload => ({
+export const receivePrivateMessage = data => ({
   type: actionTypes.RECEIVE_PRIVATE_MESSAGE,
-  payload
+  payload: data
 });
 
 export const pushMessage = payload => ({

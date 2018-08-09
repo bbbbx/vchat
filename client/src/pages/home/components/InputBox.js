@@ -10,7 +10,7 @@ dayjs.locale('zh-cn');
 
 class InputBox extends PureComponent {
   render() {
-    const { username, selectedChatRoom, socket, handleSendMessage } = this.props;
+    const { account, selectedChatRoom, socket, handleSendMessage } = this.props;
     console.log(dayjs().format('HH:mm'));
     return (
       <InputWrapper>
@@ -24,7 +24,7 @@ class InputBox extends PureComponent {
           className='content' 
           onKeyPress={e => {
             if (e.ctrlKey && e.charCode === 13) {
-              handleSendMessage(username, selectedChatRoom, this.contentDOM, socket);
+              handleSendMessage(account, selectedChatRoom, this.contentDOM, socket);
             } else if (e.charCode === 13) {
               // e.preventDefault();
             }
@@ -42,7 +42,7 @@ class InputBox extends PureComponent {
         ></div>
         <div className='action'>
           <span className='tips'>按下Ctrl+Enter发送消息</span>
-          <span className='btn' onClick={() => handleSendMessage(username, selectedChatRoom, this.contentDOM, socket)}>发送</span>
+          <span className='btn' onClick={() => handleSendMessage(account, selectedChatRoom, this.contentDOM, socket)}>发送</span>
         </div>
       </InputWrapper>
     );
@@ -50,13 +50,13 @@ class InputBox extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  username: state.login.username,
+  account: state.login.account,
   selectedChatRoom: state.home.selectedChatRoom,
   socket: state.login.socket
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSendMessage(username, selectedChatRoom, contentDOM, socket) {
+  handleSendMessage(account, selectedChatRoom, contentDOM, socket) {
     const date = dayjs().format('HH:mm');
     if (!contentDOM.innerHTML) {
       alert('消息不能为空');
@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => ({
     }
     // 广播自己发送的消息给其他人
     socket.send({
-      from: username,
+      from: account,
       to: selectedChatRoom,
       message: contentDOM.innerHTML,
       date
@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
     // 显示自己发送的消息
     dispatch(actionCreators.pushMessage({
       type: 'my_message',
-      from: username,
+      from: account,
       to: selectedChatRoom,
       message: contentDOM.innerHTML,
       date
