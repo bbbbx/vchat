@@ -68,7 +68,7 @@ export const login = payload => dispatch => {
           id: user._id,
           account: user.account,
           username: user.username,
-          password: user.password,
+          avatarURL: user.avatarURL,
           friends: user.friends,
           token,
           isLogin: true,

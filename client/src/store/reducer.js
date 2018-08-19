@@ -7,7 +7,7 @@ import { reducer as homeReducer } from '../pages/home/store';
 const loginPersistConfig = {
   key: 'login',
   storage,
-  blacklist: ['socket', 'isLogin']
+  blacklist: ['socket', 'isLogin', 'loading']
 };
 
 const homeersistConfig = {

@@ -63,3 +63,8 @@ export const changeTabIndex = index => ({
   type: actionTypes.CHANGE_TAB_INDEX,
   payload: index
 });
+
+export const changeShowSetting = showSetting => ({
+  type: actionTypes.CHANGE_SHOW_SETTING,
+  payload: showSetting
+});

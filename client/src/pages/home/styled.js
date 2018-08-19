@@ -21,6 +21,7 @@ export const UserinfoWrapper = styled.div`
   flex-direction: row;
   color: white;
   border-top-left-radius: inherit;
+  position: relative;
   .avatar {
     flex: 1;
     padding: 20px 10px;
@@ -35,10 +36,35 @@ export const UserinfoWrapper = styled.div`
     .nickname {
       flex: 4;
     }
-    .setting {
+    .setting-btn {
       flex: 1;
       padding-top: 20px;
       cursor: pointer;
+    }
+  }
+  .setting {
+    z-index: 100;
+    margin: 0;
+    padding-left: 0;
+    position: absolute;
+    overflow: auto;
+    right: 2px;
+    top: 40px;
+    // width: 70px;
+    background-color: white;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    list-style-type: none;
+    .setting-item {
+      margin: 0;
+      padding: 8px;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f1f1;
+      color: black;
+      text-align: left;
+    }
+    .danger {
+      color: red;
     }
   }
 `;

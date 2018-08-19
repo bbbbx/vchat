@@ -8,7 +8,8 @@ const initState = {
   selectedFriend: '',
   tabIndex: 0,
   showSearchUsers: false,
-  searchedUsers: []
+  searchedUsers: [],
+  showSetting: false
 };
 
 const reducer = (state = initState, action) => {
@@ -66,6 +67,11 @@ const reducer = (state = initState, action) => {
       return {
         ...newState,
         tabIndex: payload
+      };
+    case actionTypes.CHANGE_SHOW_SETTING:
+      return {
+        ...newState,
+        showSetting: payload
       };
     default:
       return newState;
